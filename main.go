@@ -13,10 +13,9 @@ func init() {
 
 }
 
-
 func main() {
     router := potato.NewRouter()
-    router.InitFile("./router.yml")
+    router.InitConfig("./routes.yml")
 
     e := http.ListenAndServe(":80", router)
     log.Println(e)
