@@ -1,36 +1,39 @@
 
 -
-    name: index
-    controller: Index
-    action: Show
-    prefix: /
+    prefix: ~
+    routes:
+        -
+            name: index
+            controller: Index
+            action: Show
+            match: /
+
+        -
+            name: sigunup
+            controller: User
+            action: Signup
+            match: /signup
+
+        - 
+            name: user_topic
+            controller: Topic
+            action: Show
+            match: /(\w+)/(\d+)
+            keys: [uid, tid]
 
 -
-    name: user_show
-    controller: User
-    action: Show
     prefix: /user
-    match: /(\d+)
-    keys: [id]
-    
+    routes:
+        -
+            name: user_show
+            controller: User
+            action: Show
+            match: /(\d+)
+            keys: [id]
+        
+        -
+            name: user_list
+            controller: User
+            action: List
+            match: /list
 
--
-    name: signup
-    controller: User
-    action: Signup
-    match: /signup
-
--
-    name: user_topic
-    controller: Topic
-    action: Show
-    match: /(\w+)/(\d+)
-    keys: [uid, tid]
-
--
-    name: user_show
-    controller: User
-    action: Show
-    prefix: /user
-    match: /aaa/(\d+)
-    keys: [id]
