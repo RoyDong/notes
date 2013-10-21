@@ -16,9 +16,9 @@
 
         - 
             name: user_topic
-            controller: Topic
-            action: Show
-            match: /(\w+)/(\d+)
+            controller: User 
+            action: Topic 
+            match: /(\d+)/(\d+)
             keys: [uid, tid]
 
 -

@@ -4,21 +4,21 @@ package main
 import (
     "log"
 _    "time"
-    "net/http"
     "github.com/roydong/potato"
+    "github.com/roydong/topic/controller"
 )
 
 func init() {
+    potato.Init()
 
-
+    r := potato.R
+    r.RegController(new(controller.Index))
+    r.RegController(new(controller.User))
 }
 
 func main() {
-    router := potato.NewRouter()
-    router.InitConfig("./routes.yml")
-
-    e := http.ListenAndServe(":80", router)
-    log.Println(e)
+    log.Fatal(potato.S.ListenAndServe())
 }
+
 
 
