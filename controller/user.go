@@ -2,6 +2,7 @@ package controller
 
 import (
     "log"
+    "time"
     "github.com/roydong/potato"
 )
 
@@ -12,6 +13,7 @@ type User struct {
 func (c *User) Show() {
     id,_ := c.Request.GetInt("id")
 
+    c.RW.Write([]byte("nihao"))
     log.Println("user show", id)
 }
 
