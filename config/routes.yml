@@ -37,12 +37,4 @@
             action: List
             pattern: /list
 
-
-error:
-
-    name: error
-    controller: Error
-    action: Show
-    pattern: /(\d+)
-    keys: [id]
         
