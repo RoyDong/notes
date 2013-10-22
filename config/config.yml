@@ -11,3 +11,8 @@ env: dev
 
 log_dir: ~
 static_dir: ~
+
+error_handler:
+    not_found: {controller: Error, action: NotFound}
+    server_error: {controller: Error, action: ServerError}
+

@@ -6,19 +6,19 @@
             name: index
             controller: Index
             action: Show
-            match: /
+            pattern: /
 
         -
             name: sigunup
             controller: User
             action: Signup
-            match: /signup
+            pattern: /signup
 
         - 
             name: user_topic
             controller: User 
             action: Topic 
-            match: /(\d+)/(\d+)
+            pattern: /(\d+)/(\d+)
             keys: [uid, tid]
 
 -
@@ -28,12 +28,21 @@
             name: user_show
             controller: User
             action: Show
-            match: /(\d+)
+            pattern: /(\d+)
             keys: [id]
         
         -
             name: user_list
             controller: User
             action: List
-            match: /list
+            pattern: /list
 
+
+error:
+
+    name: error
+    controller: Error
+    action: Show
+    pattern: /(\d+)
+    keys: [id]
+        
