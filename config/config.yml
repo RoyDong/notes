@@ -3,7 +3,7 @@
 
 http:
     host: roydong.com
-    port: 8080
+    port: 80
     timeout: 30
 
 name: Roy Dong
@@ -13,6 +13,6 @@ log_dir: ~
 static_dir: ~
 
 error_handler:
-    not_found: {controller: Error, action: NotFound1}
-    server_error: {controller: Error, action: ServerError1}
+    not_found: {controller: Error, action: NotFound}
+    server_error: {controller: Error, action: ServerError}
 

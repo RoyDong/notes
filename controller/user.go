@@ -2,7 +2,6 @@ package controller
 
 import (
     "log"
-    _"time"
     "github.com/roydong/potato"
 )
 
@@ -20,8 +19,5 @@ func (c *User) Show() {
 func (c *User) Topic() {
 
 
-    log.Println(c.Request.GetInt("uid"))
-    log.Println(c.Request.GetInt("i"))
-    log.Println(c.Request.GetFloat("f"))
-    log.Println(c.Request.Get("s"))
+    c.Response.Write([]byte("..."))
 }
