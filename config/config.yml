@@ -1,15 +1,12 @@
-
-
+name: Roy Dong
+env: dev
 
 http:
     host: roydong.com
     port: 80
     timeout: 30
 
-name: Roy Dong
-env: dev
-
-log_dir: ~
+log_dir: log/
 static_dir: ~
 
 error_handler:

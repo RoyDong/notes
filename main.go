@@ -11,6 +11,7 @@ func init() {
     potato.R.RegControllers([]interface{}{
         new(controller.Index),
         new(controller.User),
+        new(controller.Error),
     })
 }
 

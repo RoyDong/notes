@@ -12,8 +12,8 @@ type User struct {
 func (c *User) Show() {
     id,_ := c.Request.GetInt("id")
 
-    c.Response.Write([]byte("nihao"))
     log.Println("user show", id)
+    potato.Panic(11, "aa")
 }
 
 func (c *User) Topic() {
