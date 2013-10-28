@@ -9,7 +9,8 @@ type Index struct {
 }
 
 func (c *Index) Show() {
-    c.Render("layout", map[string]string{"title": "nihao", "content": "欢迎"})
+    d := map[string]string{"name": "Roy", "message": "hello"}
+    c.Render("index", d)
 }
 
 
