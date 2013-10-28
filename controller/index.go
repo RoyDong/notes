@@ -1,7 +1,6 @@
 package controller
 
 import (
-    "log"
     "github.com/roydong/potato"
 )
 
@@ -10,7 +9,7 @@ type Index struct {
 }
 
 func (c *Index) Show() {
-    log.Println("index show")
+    c.Render("layout", map[string]string{"title": "nihao", "content": "欢迎"})
 }
 
 

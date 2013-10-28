@@ -1,7 +1,6 @@
 package controller
 
 import (
-    "log"
     "github.com/roydong/potato"
 )
 
@@ -12,8 +11,7 @@ type User struct {
 func (c *User) Show() {
     id,_ := c.Request.GetInt("id")
 
-    log.Println("user show", id)
-    potato.Panic(11, "aa")
+    c.Render("aa", id)
 }
 
 func (c *User) Topic() {
