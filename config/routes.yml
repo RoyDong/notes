@@ -21,6 +21,12 @@
             pattern: /(\d+)/(\d+)
             keys: [uid, tid]
 
+        - 
+            name: home
+            controller: Index
+            action: Home 
+            pattern: /home
+
 -
     prefix: /user
     routes:
