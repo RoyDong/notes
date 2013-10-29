@@ -4,8 +4,7 @@
         <title>{{.Title}}</title>
     </head>
     <body>
-        {{.Template}}
-        {{template "index" .Data}}
+        {{include .Template .Data}}
     </body>
 </html>
 
