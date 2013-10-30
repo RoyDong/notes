@@ -9,7 +9,7 @@ type User struct {
 }
 
 func (c *User) Show() {
-    id,_ := c.Request.GetInt("id")
+    id,_ := c.Request.Int("id")
 
     c.Render("aa", id)
 }
