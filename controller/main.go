@@ -1,16 +1,15 @@
 package controller
 
 import (
-    "github.com/roydong/potato"
     "github.com/roydong/topic/model"
+    "github.com/roydong/potato"
 )
 
-type User struct {
+type Main struct {
     *potato.Controller
 }
 
-
-func (c *User) Signin() {
+func (c *Main) Signin() {
     form := new(model.UserForm)
 
     if c.Request.Method == "POST" {
@@ -18,6 +17,5 @@ func (c *User) Signin() {
         form.Passwd,_ = c.Request.String("passwd")
     }
 
-    c.Title = "Admin - Sign in"
     c.Render("signin", form)
 }

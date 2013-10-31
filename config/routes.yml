@@ -14,6 +14,12 @@
             action: Signup
             pattern: /signup
 
+        -
+            name: signin
+            controller: User
+            action: Signin
+            pattern: /signin
+
         - 
             name: user_topic
             controller: User 
