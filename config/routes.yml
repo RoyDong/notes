@@ -29,7 +29,7 @@
 
         - 
             name: home
-            controller: Index
+            controller: User 
             action: Home 
             pattern: /home
 

@@ -4,7 +4,6 @@ import (
     "io"
     "fmt"
     "time"
-    "strings"
     "crypto/rand"
     "crypto/md5"
     "crypto/sha512"
@@ -33,7 +32,7 @@ func (f *UserForm) LoadData(r *potato.Request) {
 }
 
 func (f *UserForm) Valid() bool {
-    if !strings.HasSuffix(f.Email, "@roydong.com") {
+    if f.Email != "i@roydong.com" {
         f.Message = "email is not allowd"
         return false
     }
@@ -82,8 +81,16 @@ func (m *userModel) User(id int64) *User {
 }
 
 func (m *userModel) FindByEmail(email string) *User {
+    stmt := fmt.Sprintf("select `id`,`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at` from %s where `email`='%s'", m.tabel, email)
 
-    return nil
+    row := potato.D.QueryRow(stmt)
+
+    u := new(User)
+    if e := row.Scan(&u.id, &u.Email, &u.Name, &u.passwd, &u.salt, &u.CreatedAt, &u.UpdatedAt); e != nil {
+        return nil
+    }
+
+    return u
 }
 
 func (m *userModel) Exists(email string) bool {
@@ -91,7 +98,7 @@ func (m *userModel) Exists(email string) bool {
     row := potato.D.QueryRow(stmt)
     var count int
     if e := row.Scan(&count); e != nil {
-        panic(e)
+        potato.L.Println(e)
     }
 
     return count > 0

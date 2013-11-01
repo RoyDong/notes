@@ -1,4 +1,4 @@
-DROP TABLE `user` IF EXISTS;
+DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
       `id` bigint(11) NOT NULL AUTO_INCREMENT,
