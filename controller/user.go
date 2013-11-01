@@ -19,5 +19,34 @@ func (c *User) Signin() {
     }
 
     c.Title = "Admin - Sign in"
-    c.Render("signin", form)
+    c.Render("user/signin", form)
+}
+
+func (c *User) Signup() {
+    form := new(model.UserForm)
+
+    if c.Request.Method == "POST" {
+        form.LoadData(c.Request)
+        if form.Valid() {
+            m := model.UserModel
+            if m.Exists(form.Email) {
+                form.Message = "Email exists"
+                goto L
+            }
+
+            user := new(model.User)
+            user.Email = form.Email
+            user.SetPasswd(form.Passwd)
+            if m.Save(user) {
+                c.Redirect("/")
+                return
+            }
+
+            form.Message = "server error, could not save data"
+        }
+    }
+
+    L:
+    c.Title = "Admin - Sign up"
+    c.Render("user/signup", form)
 }

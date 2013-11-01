@@ -2,9 +2,14 @@ package model
 
 import (
     "io"
+    "fmt"
+    "time"
+    "strings"
     "crypto/rand"
+    "crypto/md5"
     "crypto/sha512"
     "encoding/hex"
+    "github.com/roydong/potato"
 )
 
 var UserModel = &userModel{"user"}
@@ -19,7 +24,26 @@ type User struct {
 
 type UserForm struct {
     Id int64
-    Name, Email, Passwd string
+    Name, Email, Passwd, Message string
+}
+
+func (f *UserForm) LoadData(r *potato.Request) {
+    f.Email,_  = r.String("email")
+    f.Passwd,_ = r.String("passwd")
+}
+
+func (f *UserForm) Valid() bool {
+    if !strings.HasSuffix(f.Email, "@roydong.com") {
+        f.Message = "email is not allowd"
+        return false
+    }
+
+    if len(f.Passwd) < 6 {
+        f.Message = "password must more than 6"
+        return false
+    }
+
+    return true
 }
 
 func (u *User) Id() int64 {
@@ -35,7 +59,12 @@ func (u *User) SetPasswd(passwd string) {
         panic("could not generate random salt")
     }
 
-    u.salt = string(rnd)
+    hash := md5.New()
+    if _, e := hash.Write(rnd); e != nil {
+        panic("could not hash salt")
+    }
+
+    u.salt = hex.EncodeToString(hash.Sum(nil))
     u.passwd = UserModel.HashPasswd(passwd, u.salt)
 }
 
@@ -57,8 +86,37 @@ func (m *userModel) FindByEmail(email string) *User {
     return nil
 }
 
-func (m *userModel) Save(u *User) {
+func (m *userModel) Exists(email string) bool {
+    stmt := fmt.Sprintf("select count(id) c from %s where `email`='%s'", m.tabel, email)
+    row := potato.D.QueryRow(stmt)
+    var count int
+    if e := row.Scan(&count); e != nil {
+        panic(e)
+    }
 
+    return count > 0
+}
+
+func (m *userModel) Save(u *User) bool {
+    if u.Id() > 0 {
+        return false
+    }
+
+    return m.Add(u)
+}
+
+func (m *userModel) Add(u *User) bool {
+    t := time.Now().UnixNano()
+    u.CreatedAt = t
+    u.UpdatedAt = t
+    stmt := fmt.Sprintf("insert into %s" +
+        "(`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at`)values" +
+        "('%s','%s','%s','%s','%d','%d')",
+        m.tabel, u.Email, u.Name, u.passwd, u.salt, t, t)
+
+        potato.L.Println(stmt)
+    u.id = potato.D.Insert(stmt)
+    return u.id > 0
 }
 
 func (m *userModel) HashPasswd(passwd string, salt string) string {
