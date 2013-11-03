@@ -21,7 +21,7 @@ func (c *User) Signin() {
         if form.Valid() {
             m := model.UserModel
             if user := m.FindByEmail(form.Email); user != nil {
-                c.Request.Session.Mount("user", user, true)
+                c.Request.Session.Set("user", user, true)
                 c.Redirect("/home")
                 return
             }
@@ -49,7 +49,7 @@ func (c *User) Signup() {
             user.Email = form.Email
             user.SetPasswd(form.Passwd)
             if m.Save(user) {
-                c.Request.Session.Mount("user", user, true)
+                c.Request.Session.Set("user", user, true)
                 c.Redirect("/home")
                 return
             }
