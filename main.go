@@ -8,11 +8,7 @@ import (
 
 func init() {
     potato.Init()
-    potato.R.RegControllers([]interface{}{
-        new(controller.Index),
-        new(controller.User),
-        new(controller.Error),
-    })
+    controller.Init()
 }
 
 func main() {

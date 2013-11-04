@@ -4,6 +4,7 @@ import (
     "io"
     "fmt"
     "time"
+    "strings"
     "crypto/rand"
     "crypto/md5"
     "crypto/sha512"
@@ -13,14 +14,6 @@ import (
 
 var UserModel = &userModel{"user"}
 
-type User struct {
-    id int64
-    passwd, salt string
-
-    Name, Email string
-    CreatedAt, UpdatedAt int64
-}
-
 type UserForm struct {
     Id int64
     Name, Email, Passwd, Message string
@@ -29,20 +22,32 @@ type UserForm struct {
 func (f *UserForm) LoadData(r *potato.Request) {
     f.Email,_  = r.String("email")
     f.Passwd,_ = r.String("passwd")
+    f.Name,_   = r.String("name")
 }
 
 func (f *UserForm) Valid() bool {
-    if f.Email != "i@roydong.com" {
+    f.Email = strings.Trim(f.Email, " ")
+    if !strings.HasSuffix(f.Email, "@roydong.com") {
         f.Message = "email is not allowd"
         return false
     }
 
+    f.Passwd = strings.Trim(f.Passwd, " ")
     if len(f.Passwd) < 6 {
         f.Message = "password must more than 6"
         return false
     }
 
+    f.Name = strings.Trim(f.Name, " ")
     return true
+}
+
+type User struct {
+    id int64
+    passwd, salt string
+
+    Name, Email string
+    CreatedAt, UpdatedAt time.Time
 }
 
 func (u *User) Id() int64 {
@@ -84,12 +89,14 @@ func (m *userModel) FindByEmail(email string) *User {
     stmt := fmt.Sprintf("select `id`,`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at` from %s where `email`='%s'", m.tabel, email)
 
     row := potato.D.QueryRow(stmt)
-
     u := new(User)
-    if e := row.Scan(&u.id, &u.Email, &u.Name, &u.passwd, &u.salt, &u.CreatedAt, &u.UpdatedAt); e != nil {
+    var ct, ut int64
+    if e := row.Scan(&u.id, &u.Email, &u.Name, &u.passwd, &u.salt, &ct, &ut); e != nil {
         return nil
     }
 
+    u.CreatedAt = time.Unix(0, ct)
+    u.UpdatedAt = time.Unix(0, ut)
     return u
 }
 
@@ -113,16 +120,14 @@ func (m *userModel) Save(u *User) bool {
 }
 
 func (m *userModel) Add(u *User) bool {
-    t := time.Now().UnixNano()
+    t := time.Now()
     u.CreatedAt = t
     u.UpdatedAt = t
-    stmt := fmt.Sprintf("insert into %s" +
-        "(`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at`)values" +
-        "('%s','%s','%s','%s','%d','%d')",
-        m.tabel, u.Email, u.Name, u.passwd, u.salt, t, t)
+    u.id = potato.D.Insert(fmt.Sprintf("INSERT INTO `%s`" +
+            "(`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at`)" +
+            "VALUES(?,?,?,?,?,?)", m.tabel),
+            u.Email, u.Name, u.passwd, u.salt, t.UnixNano(), t.UnixNano())
 
-        potato.L.Println(stmt)
-    u.id = potato.D.Insert(stmt)
     return u.id > 0
 }
 

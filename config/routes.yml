@@ -1,13 +1,6 @@
-
 -
     prefix: ~
     routes:
-        -
-            name: index
-            controller: Index
-            action: Show
-            pattern: /
-
         -
             name: sigunup
             controller: User
@@ -21,17 +14,10 @@
             pattern: /signin
 
         - 
-            name: user_topic
+            name: setting
             controller: User 
-            action: Topic 
-            pattern: /(\d+)/(\d+)
-            keys: [uid, tid]
-
-        - 
-            name: home
-            controller: User 
-            action: Home 
-            pattern: /home
+            action: Setting
+            pattern: /setting
 
 -
     prefix: /user
@@ -49,4 +35,12 @@
             action: List
             pattern: /list
 
+-
+    prefix: /topic
+    routes:
+        -
+            name: topic_new
+            controller: Topic
+            action: New
+            pattern: /new
         

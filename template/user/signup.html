@@ -1,5 +1,6 @@
 <form action="/signup" method="post" >
     {{.Message}}
+    <input type="text" name="name" value="{{.Name}}"/>
     <input type="text" name="email" value="{{.Email}}"/>
     <input type="password" name="passwd" value="{{.Passwd}}"/>
 

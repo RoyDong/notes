@@ -1,17 +1,19 @@
 package controller
 
 import (
-    "log"
     "github.com/roydong/potato"
 )
 
 type Error struct {
-    *potato.Controller
+    Base
 }
 
 
 func (c *Error) ServerError(e *potato.Error) {
 
-    log.Println(e)
-    c.Response.SetBody([]byte(e.String()))
+    c.Render("error/notfound", e)
+}
+
+func (c *Error) NotFound(e *potato.Error) {
+    c.Render("error/notfound", e)
 }

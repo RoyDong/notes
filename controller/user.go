@@ -1,17 +1,23 @@
 package controller
 
 import (
+    "net/http"
     "github.com/roydong/potato"
     "github.com/roydong/topic/model"
 )
 
 type User struct {
-    *potato.Controller
+    Base
 }
 
-func (c *User) Home() {
-    u,_ := c.Request.Session.Value("user").(*model.User)
-    c.Render("user/home", u)
+func (c *User) Setting() {
+    var u *model.User
+    if u = c.User(); u == nil {
+        potato.Panic(http.StatusUnauthorized, "You have not signed in")
+    }
+
+    c.Title = "Admin - Setting"
+    c.Render("user/setting", u)
 }
 
 func (c *User) Signin() {
@@ -20,13 +26,14 @@ func (c *User) Signin() {
         form.LoadData(c.Request)
         if form.Valid() {
             m := model.UserModel
-            if user := m.FindByEmail(form.Email); user != nil {
+            if user := m.FindByEmail(form.Email); user != nil &&
+                    user.CheckPasswd(form.Passwd) {
                 c.Request.Session.Set("user", user, true)
-                c.Redirect("/home")
+                c.Redirect("/setting")
                 return
             }
 
-            form.Message = "user exists"
+            form.Message = "email or password wrong"
         }
     }
 
@@ -46,11 +53,13 @@ func (c *User) Signup() {
             }
 
             user := new(model.User)
+            user.Name = form.Name
+            potato.L.Println(form, user)
             user.Email = form.Email
             user.SetPasswd(form.Passwd)
             if m.Save(user) {
                 c.Request.Session.Set("user", user, true)
-                c.Redirect("/home")
+                c.Redirect("/setting")
                 return
             }
 
