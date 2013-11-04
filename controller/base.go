@@ -17,12 +17,3 @@ func (c *Base) User() *model.User {
 
     return c.user
 }
-
-func Init() {
-    potato.R.RegControllers([]interface{}{
-        new(Error),
-        new(User),
-        new(Main),
-        new(Topic),
-    })
-}
