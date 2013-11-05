@@ -1,4 +1,14 @@
-<form action="/topic/new" method="post" >
-    <input type="text" name="title"  />
-    <textarea name="content" id="content"></textarea>
-</form>
+{{define "JS"}}
+    <script type="text/javascript" src="/tinymce_jquery/js/tinymce/tinymce.min.js" ></script>
+{{end}}
+
+<center>
+    <form action="/topic/new" method="post" >
+        <input type="text" name="title"  />
+        <textarea name="content" id="content"></textarea>
+    </form>
+</center>
+
+<script>
+    tinymce.init({selector:'#content'});
+</script>

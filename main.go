@@ -9,7 +9,7 @@ import (
 func init() {
     potato.Init()
 
-    potato.T.Funcs(map[string]interface{} {
+    potato.H.Funcs(map[string]interface{} {
         "creator": func() string {return "Roy Dong"},
     })
 
