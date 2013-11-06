@@ -4,9 +4,9 @@
 
 <center>
     <form action="/topic/new" method="post" >
-        <div>{{.}}</div>
-        <textarea placeholder="title" style="width: 500px; height: 50px;" name="title" id="title" name="title"></textarea>
-        <textarea placeholder="content" name="content" id="content" name="content"></textarea>
+        <div>{{.Message}}</div>
+        <textarea placeholder="title" style="width: 500px; height: 50px;" name="title" id="title" name="title">{{.Title}}</textarea>
+        <textarea placeholder="content" name="content" id="content" name="content">{{.Content}}</textarea>
         <input type="submit" value="submit"/>
     </form>
 </center>

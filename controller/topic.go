@@ -1,6 +1,8 @@
 package controller
 
 import (
+    "fmt"
+    "net/http"
     "github.com/roydong/potato"
     "github.com/roydong/topic/model"
 )
@@ -10,41 +12,41 @@ type Topic struct {
 }
 
 func (c *Topic) New() {
-    var message string
+    form := new(model.TopicForm)
     if c.Request.Method == "POST" {
+        form.LoadData(c.Request)
+        if l := len(form.Title); l == 0 || l > 255 {
+            form.Message = "title length must between 1 - 255"
+            goto RENDER
+        }
+
+        if len(form.Content) == 0 {
+            form.Message = "content is empty"
+            goto RENDER
+        }
+
         topic := new(model.Topic)
-        topic.Title,_ = c.Request.String("title")
-        if l := len(topic.Title); l == 0 || l > 255 {
-            message = "title length must between 1 - 255"
-            goto RENDER
-        }
-
-        topic.Content,_ = c.Request.String("content")
-        if len(topic.Content) == 0 {
-            message = "content is empty"
-            goto RENDER
-        }
-
-        potato.L.Println(topic)
+        topic.Title = form.Title
+        topic.Content = form.Content
 
         if model.TopicModel.Save(topic) {
             c.Redirect(fmt.Sprintf("/topic/%d", topic.Id()))
             return
         }
 
-        message = "could not save to db"
+        form.Message = "could not save to db"
     }
 
     RENDER:
-        c.Render("topic/new", message)
+        c.Render("topic/new", form)
 }
 
 func (c *Topic) Show() {
     id,_ := c.Request.Int("id")
 
-    if topic := model.TopicModel.Find(id); topic == nil {
-        c.Panic(http.StatusNotFound, "topic not found")
+    if topic := model.TopicModel.Find(id); topic != nil {
+        c.Render("topic/show", topic)
+    } else {
+        potato.Panic(http.StatusNotFound, "topic not found")
     }
-
-    c.Render("topic/show", topic)
 }
