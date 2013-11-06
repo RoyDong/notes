@@ -11,3 +11,14 @@ CREATE TABLE `user` (
       PRIMARY KEY (`id`),
       UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+DROP TABLE IF EXISTS `topic`;
+
+CREATE TABLE `topic` (
+      `id` bigint(11) NOT NULL AUTO_INCREMENT,
+      `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+      `content` text CHARACTER SET utf8,
+      `created_at` bigint(20) unsigned NOT NULL DEFAULT '0',
+      `updated_at` bigint(20) unsigned NOT NULL DEFAULT '0',
+      PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

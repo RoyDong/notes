@@ -12,8 +12,6 @@ import (
     "github.com/roydong/potato"
 )
 
-var UserModel = &userModel{"user"}
-
 type UserForm struct {
     Id int64
     Name, Email, Passwd, Message string
@@ -80,6 +78,8 @@ func (u *User) CheckPasswd(passwd string) bool {
 type userModel struct {
     tabel string
 }
+
+var UserModel = &userModel{"user"}
 
 func (m *userModel) User(id int64) *User {
     return nil

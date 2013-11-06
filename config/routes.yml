@@ -19,21 +19,6 @@
             action: Setting
             pattern: /setting
 
--
-    prefix: /user
-    routes:
-        -
-            name: user_show
-            controller: User
-            action: Show
-            pattern: /(\d+)
-            keys: [id]
-        
-        -
-            name: user_list
-            controller: User
-            action: List
-            pattern: /list
 
 -
     prefix: /topic
@@ -44,3 +29,9 @@
             action: New
             pattern: /new
         
+        -
+            name: topic_show
+            controller: Topic
+            action: Show 
+            pattern: /(\d+)
+            keys: [id]
