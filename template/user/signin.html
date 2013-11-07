@@ -1,7 +1,8 @@
+{{$ := .Data}}
 <form action="/signin" method="post" >
-    {{.Message}}
-    <input type="text" name="email" value="{{.Email}}"/>
-    <input type="password" name="passwd" value="{{.Passwd}}"/>
+    {{$.Message}}
+    <input type="text" name="email" value="{{$.Email}}"/>
+    <input type="password" name="passwd" value="{{$.Passwd}}"/>
 
 
     <input type="submit" value="提交"/>

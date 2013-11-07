@@ -1,18 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{.Title}}</title>
-        {{if defined "CSS"}}
-            {{template "CSS"}}
-        {{end}}
-
+        <title>{{.Title ""}}</title>
+        {{.CSS ""}}
         <script type="text/javascript" src="/jquery.min.js" ></script>
-        {{if defined "JS"}}
-            {{template "JS"}}
-        {{end}}
+        {{.JS ""}}
     </head>
     <body>
-        {{include .Template .Data}}
+        {{.Content}}
     </body>
 </html>
 

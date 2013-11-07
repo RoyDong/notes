@@ -1,12 +1,11 @@
-{{define "JS"}}
-    <script type="text/javascript" src="/tinymce_jquery/js/tinymce/tinymce.min.js" ></script>
-{{end}}
-
+{{$ := .Data}}
+{{.Title "Admin - new topic" }}
+{{.JS "/tinymce_jquery/js/tinymce/tinymce.min.js"}}
 <center>
+    {{$.Message}}
     <form action="/topic/new" method="post" >
-        <div>{{.Message}}</div>
-        <textarea placeholder="title" style="width: 500px; height: 50px;" name="title" id="title" name="title">{{.Title}}</textarea>
-        <textarea placeholder="content" name="content" id="content" name="content">{{.Content}}</textarea>
+        <textarea placeholder="title" style="width: 500px; height: 50px;" name="title" id="title" name="title">{{$.Title}}</textarea>
+        <textarea placeholder="content" name="content" id="content" name="content">{{$.Content}}</textarea>
         <input type="submit" value="submit"/>
     </form>
 </center>

@@ -1,7 +1,8 @@
+{{$ := .Data}}
 <center>
-    <p>ID: {{.Id}}<p>
-    <p>Name: {{.Name}}<p>
-    <p>Email: {{.Email}}<p>
-    <p>Created at: {{.CreatedAt.Format "2006-01-02 15:04"}}<p>
-    <p>Updated at: {{.UpdatedAt.Format "2006-01-02 15:04"}}<p>
+    <p>ID: {{$.Id}}<p>
+    <p>Name: {{$.Name}}<p>
+    <p>Email: {{$.Email}}<p>
+    <p>Created at: {{$.CreatedAt.Format "2006-01-02 15:04"}}<p>
+    <p>Updated at: {{$.UpdatedAt.Format "2006-01-02 15:04"}}<p>
 </center>

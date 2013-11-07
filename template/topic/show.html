@@ -1,8 +1,8 @@
-{{define "CSS"}}
-<link type="text/css" rel="stylesheet" href="/css/content.css"/>
-{{end}}
+{{$ := .Data}}
+{{printf "Admin - %s" $.Title | .Title}}
+{{.JS "/css/content.css"}}
 <center>
-    <p>{{.Title}}</p>
+    <p>{{$.Title}}</p>
 </center>
-{{.Content}}
-<p>Created at: {{.CreatedAt.Format "2006-01-02 15:04"}} Updated at: {{.UpdatedAt.Format "2006-01-02 15:04"}}<p>
+{{$.Content}}
+<p>Created at: {{$.CreatedAt.Format "2006-01-02 15:04"}} Updated at: {{$.UpdatedAt.Format "2006-01-02 15:04"}}<p>
