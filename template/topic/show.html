@@ -1,8 +1,8 @@
 {{$ := .Data}}
-{{printf "Admin - %s" $.Title | .Title}}
-{{.CSS "/css/content.css"}}
+{{.Title $.Title}}
+{{.CSS "/css/main.css"}}
 <center>
     <p>{{$.Title}}</p>
 </center>
-{{html $.Content}}
+<div class="topic">{{html $.Content}}</div>
 <p>Created at: {{$.CreatedAt.Format "2006-01-02 15:04"}} Updated at: {{$.UpdatedAt.Format "2006-01-02 15:04"}}</p>

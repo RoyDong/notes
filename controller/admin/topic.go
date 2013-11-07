@@ -2,12 +2,11 @@ package admin
 
 import (
     "fmt"
-    "github.com/roydong/notes/controller"
     "github.com/roydong/notes/model"
 )
 
 type Topic struct {
-    controller.Base
+    Base
 }
 
 func (c *Topic) New() {
@@ -30,7 +29,6 @@ func (c *Topic) New() {
 
         if model.TopicModel.Save(topic) {
             c.Redirect(fmt.Sprintf("/topic/%d", topic.Id()))
-            return
         }
 
         form.Message = "could not save to db"
@@ -40,3 +38,6 @@ func (c *Topic) New() {
         c.Render("admin/topic/new", form)
 }
 
+func (c *Topic) List() {
+
+}

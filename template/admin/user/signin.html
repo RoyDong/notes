@@ -1,9 +1,10 @@
 {{$ := .Data}}
-<form action="/signin" method="post" >
-    {{$.Message}}
-    <input type="text" name="email" value="{{$.Email}}"/>
-    <input type="password" name="passwd" value="{{$.Passwd}}"/>
-
-
-    <input type="submit" value="提交"/>
-</form>
+<center>
+    <p>登录</p>
+    <form action="/admin/signin" method="post" >
+        {{$.Message}}
+        <p><input type="text" name="email" value="{{$.Email}}" placeholder="email" /></p>
+        <p><input type="password" name="passwd" value="{{$.Passwd}}" placeholder="password" /></p>
+        <input type="submit" value="提交"/>
+    </form>
+</center>

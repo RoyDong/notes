@@ -4,14 +4,19 @@ import (
     "net/http"
     "github.com/roydong/potato"
     "github.com/roydong/notes/model"
-    "github.com/roydong/notes/controller"
 )
 
 type User struct {
-    controller.Base
+    Base
+}
+
+func (c *User) Init() {
+
 }
 
 func (c *User) Setting() {
+    c.Base.Init()
+
     var u *model.User
     if u = c.User(); u == nil {
         potato.Panic(http.StatusUnauthorized, "You have not signed in")
@@ -29,8 +34,7 @@ func (c *User) Signin() {
             if user := m.FindByEmail(form.Email); user != nil &&
                     user.CheckPasswd(form.Passwd) {
                 c.Request.Session.Set("user", user, true)
-                c.Redirect("/setting")
-                return
+                c.Redirect("/admin/setting")
             }
 
             form.Message = "email or password wrong"
@@ -58,8 +62,7 @@ func (c *User) Signup() {
             user.SetPasswd(form.Passwd)
             if m.Save(user) {
                 c.Request.Session.Set("user", user, true)
-                c.Redirect("/setting")
-                return
+                c.Redirect("/admin/setting")
             }
 
             form.Message = "server error, could not save data"

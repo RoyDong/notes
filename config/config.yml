@@ -2,9 +2,8 @@ name: Topics
 env: dev
 
 http:
-    host: roydong.com
+    host: notes.roydong.com
     port: 80
-    timeout: 30
 
 log_dir: log/
 static_dir: ~

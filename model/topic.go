@@ -35,6 +35,10 @@ type topicModel struct {
     table string
 }
 
+func (m *topicModel) Page(k, v string, page, size int) []*Topic {
+
+}
+
 func (m *topicModel) Find(id int) *Topic {
     stmt := fmt.Sprintf("select `id`,`title`,`content`,`created_at`,`updated_at` from %s where `id`='%d'", m.table, id)
 
