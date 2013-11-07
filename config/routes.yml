@@ -1,37 +1,53 @@
 -
-    prefix: ~
+    prefix: /topic
+    routes:
+        -
+            name: topic_show
+            controller: topic
+            action: Show 
+            pattern: /(\d+)
+            keys: [id]
+
+-
+    prefix: /admin
     routes:
         -
             name: sigunup
-            controller: User
+            controller: admin_user
             action: Signup
             pattern: /signup
 
         -
             name: signin
-            controller: User
+            controller: admin_user
             action: Signin
             pattern: /signin
 
         - 
             name: setting
-            controller: User 
+            controller: admin_user
             action: Setting
             pattern: /setting
 
 
 -
-    prefix: /topic
+    prefix: /admin/topic
     routes:
         -
-            name: topic_new
-            controller: Topic
+            name: admin_topic_new
+            controller: admin_topic
             action: New
             pattern: /new
         
         -
-            name: topic_show
-            controller: Topic
+            name: admin_topics
+            controller: admin_topic
+            action: Show 
+            pattern: /
+        
+        -
+            name: admin_topic_edit
+            controller: admin_topic
             action: Show 
             pattern: /(\d+)
             keys: [id]

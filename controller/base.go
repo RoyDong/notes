@@ -2,7 +2,7 @@ package controller
 
 import (
     "github.com/roydong/potato"
-    "github.com/roydong/topic/model"
+    "github.com/roydong/notes/model"
 )
 
 type Base struct {
