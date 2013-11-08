@@ -63,6 +63,6 @@
         -
             name: admin_topic_edit
             controller: admin_topic
-            action: Show 
-            pattern: /(\d+)
+            action: Edit
+            pattern: /(\d+)/edit
             keys: [id]

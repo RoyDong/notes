@@ -2,14 +2,17 @@
 <html>
     <head>
         <title>{{.Title ""}}</title>
+        <link rel="stylesheet" href="/css/main.css">
         {{.CSS ""}}
         <script type="text/javascript" src="/jquery.min.js" ></script>
         {{.JS ""}}
     </head>
-    <body>
-    <div style="width: 960px; margin:0px auto;">
+    <body style="background: #eee;">
+    {{template "header"}}
+    <div style="max-width: 960px; margin:0px auto;">
         {{.Content}}
     </div>
+    {{template "footer"}}
     </body>
 </html>
 

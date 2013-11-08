@@ -1,9 +1,8 @@
 {{$ := .Data}}
-{{.Title "Admin - new topic" }}
+{{.Title "Admin - edit topic" }}
 {{.JS "/tinymce_jquery/js/tinymce/tinymce.min.js"}}
 <center>
-    {{$.Message}}
-    <form action="/topic/new" method="post" >
+    <form action="/admin/topic/{{$.Id}}/edit" method="post" >
         <textarea placeholder="title" style="width: 500px; height: 50px;" name="title" id="title" name="title">{{$.Title}}</textarea>
         <textarea placeholder="content" class="topic" name="content" id="content" name="content">{{$.Content}}</textarea>
         <input type="submit" value="submit"/>
@@ -15,12 +14,8 @@
         selector:'#content',
         height: 800,
         content_css: "/css/content.css",
-        plugins: [
-            "autolink link image anchor",
-            "print preview media fullpage",
-            "forecolor backcolor emoticons"
-        ],
-        toolbar: "insertfile undo redo | styleselect | bold italic  fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image anchor",
+        plugins: ["autolink link image"],
+        toolbar: "insertfile undo redo | styleselect | bold italic  fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticonsi",
         theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
         font_size_style_values: "12px,13px,14px,16px,18px,20px"
     });

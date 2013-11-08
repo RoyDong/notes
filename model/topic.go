@@ -94,11 +94,25 @@ func (m *topicModel) Find(id int) *Topic {
 
 func (m *topicModel) Save(t *Topic) bool {
     if t.Id() > 0 {
-
-        return false
+        return m.Update(t)
     }
 
     return m.Add(t)
+}
+
+func (m *topicModel) Update(t *Topic) bool {
+    now := time.Now()
+    t.UpdatedAt = now
+    _,e := potato.D.Exec(fmt.Sprintf("UPDATE `%s` SET" +
+            " `title`=?,`content`=?,`created_at`=?,`updated_at`=?" +
+            " WHERE `id`=?", m.table),
+            t.Title, t.Content, t.CreatedAt.UnixNano(), now.UnixNano(), t.id)
+    if e != nil {
+        potato.L.Println(e)
+        return false
+    }
+
+    return true
 }
 
 func (m *topicModel) Add(t *Topic) bool {

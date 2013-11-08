@@ -1,1 +1,6 @@
+html, h1, h2, h3, h4, h5, h6, body, div, span, p {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+}
 .topic p{text-indent: 50px}
