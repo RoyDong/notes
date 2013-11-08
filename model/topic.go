@@ -3,6 +3,7 @@ package model
 import (
     "fmt"
     "time"
+    "strings"
     "github.com/roydong/potato"
 )
 
@@ -35,14 +36,44 @@ type topicModel struct {
     table string
 }
 
-func (m *topicModel) Page(k, v string, page, size int) []*Topic {
-
+type Scanner interface{
+    Scan(args ...interface{}) error
 }
 
-func (m *topicModel) Find(id int) *Topic {
-    stmt := fmt.Sprintf("select `id`,`title`,`content`,`created_at`,`updated_at` from %s where `id`='%d'", m.table, id)
+func (m *topicModel) Search(q map[string]string, page, limit int) []*Topic {
+    sql := fmt.Sprintf("SELECT `id`,`title`,`content`,`created_at`,`updated_at` FROM `%s`", m.table)
+    l := len(q)
+    args := make([]interface{}, 0, l + 2)
+    if l > 0 {
+        c := make([]string, 0, l)
+        for k, v := range q {
+            c = append(c, fmt.Sprintf("`%s` REGEXP ? ", k))
+            args = append(args, v)
+        }
 
-    row := potato.D.QueryRow(stmt)
+        sql = sql + " WHERE " + strings.Join(c, " AND ")
+    }
+
+    if page < 1 { page = 1}
+    args = append(args, (page - 1) * limit, limit)
+
+    rows, e := potato.D.Query(sql + " LIMIT ?,?", args...)
+    if e != nil {
+        potato.L.Println(e)
+        return nil
+    }
+
+    topics := make([]*Topic, 0, limit)
+    for rows.Next() {
+        if t := m.loadTopic(rows); t != nil {
+            topics = append(topics, t)
+        }
+    }
+
+    return topics
+}
+
+func (m *topicModel) loadTopic(row Scanner) *Topic {
     t := new(Topic)
     var ct, ut int64
     if e := row.Scan(&t.id, &t.Title, &t.Content , &ct, &ut); e != nil {
@@ -53,6 +84,12 @@ func (m *topicModel) Find(id int) *Topic {
     t.CreatedAt = time.Unix(0, ct)
     t.UpdatedAt = time.Unix(0, ut)
     return t
+}
+
+func (m *topicModel) Find(id int) *Topic {
+    sql := fmt.Sprintf("select `id`,`title`,`content`,`created_at`,`updated_at` from %s where `id`='%d'", m.table, id)
+
+    return m.loadTopic(potato.D.QueryRow(sql))
 }
 
 func (m *topicModel) Save(t *Topic) bool {

@@ -20,6 +20,14 @@ func (c *Base) User() *model.User {
 
 func (c *Base) Init() {
     if c.User() == nil {
-        c.Redirect("/admin/signin")
+        if potato.Env == "prod" {
+            c.Redirect("/admin/signin")
+        }
+
+        if potato.Env == "dev" {
+            if user := model.UserModel.FindByEmail("i@roydong.com"); user != nil {
+                c.Request.Session.Set("user", user, true)
+            }
+        }
     }
 }

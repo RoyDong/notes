@@ -39,5 +39,21 @@ func (c *Topic) New() {
 }
 
 func (c *Topic) List() {
+    q := make(map[string]string, 2)
+    title,_ := c.Request.String("title")
+    if len(title) > 0 {
+        q["title"] = title
+    }
 
+    content,_ := c.Request.String("content")
+    if len(content) > 0 {
+        q["content"] = content
+    }
+
+    page,_ := c.Request.Int("page")
+    if page < 1 { page = 1 }
+    size,_ := c.Request.Int("size")
+    if size < 1 { size = 200 }
+
+    c.Render("admin/topic/list", model.TopicModel.Search(q, page, size))
 }

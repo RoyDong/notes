@@ -1,0 +1,6 @@
+{{range $v := .Data}}
+    <div>
+        <p><a href="/topic/{{$v.Id}}" >ID: {{$v.Id}}</a></p>
+        <p><a href="/topic/{{$v.Id}}" target="_blank">Title: {{$v.Title}}</a></p>
+    </div>
+{{end}}
