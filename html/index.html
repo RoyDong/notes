@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Study Notes {{.Title ""}}</title>
-        <link rel="stylesheet" href="/css/main.css">
-        {{.CSS ""}}
-        <script type="text/javascript" src="/jquery.min.js" ></script>
-        {{.JS ""}}
+        <title>Study Notes</title>
+        <link rel="stylesheet" href="http://notes.roydong.com/css/main.css">
+        <script type="text/javascript" src="http://notes.roydong.com/jquery.min.js" ></script>
     </head>
     <body style="background-color: #e5e5e5;">
         <div id="header">
@@ -18,13 +16,8 @@
                 <a href="/">首页</a>
                 <a href="/about">关于</a>
             </div>
-            <div class="clear"></div>
         </div>
         <div id="body">
-            <div class="content_box">
-                {{.Content}}
-            </div>
-            <div class="clear"></div>
         </div>
     </body>
 </html>

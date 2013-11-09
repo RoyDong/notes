@@ -30,4 +30,6 @@ func (c *Base) Init() {
             }
         }
     }
+
+    c.Layout = "admin/layout"
 }
