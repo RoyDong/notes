@@ -11,9 +11,10 @@ func init() {
     potato.Init()
 
     potato.T.Funcs(map[string]interface{} {
-        "potato": func() string {return "potato framework 0.1.0"},
     })
 
+    //the map keys here must corresponds with 
+    //the controller configured in routes.yml
     potato.R.Controllers(map[string]interface{} {
         "error": new(controller.Error),
         "main": new(controller.Main),

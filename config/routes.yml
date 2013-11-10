@@ -3,8 +3,8 @@
     routes:
         -
             name: index
-            controller: main
-            action: Index
+            controller: topic
+            action: List 
             pattern: /
         -
             name: about

@@ -1,0 +1,11 @@
+{{$ := .Data}}
+{{range $v := $.topics}}
+    <div>
+        <p><a href="/topic/{{$v.Id}}" >Title: {{$v.Title}}</a></p>
+    </div>
+{{end}}
+<div>
+    {{$.Page}}
+    <span><a href="/admin/topic/?page={{$.prevpage}}">prev</a></span>
+    <span><a href="/admin/topic/?page={{$.nextpage}}">next</a></span>
+</div>

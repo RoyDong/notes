@@ -64,7 +64,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 }
 
 #main-menu a {
-    color: #787878;
+    color: #999;
     font-size: 18px;
     line-height: 30px;
     vertical-align: middle;
@@ -73,10 +73,6 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 }
 
 #main-menu a:hover {
-    color: #555;
-}
-
-#main-menu a:active {
     color: #555;
 }
 

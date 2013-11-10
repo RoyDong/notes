@@ -28,6 +28,7 @@ func (c *Topic) New() {
         topic := new(model.Topic)
         topic.Title = form.Title
         topic.Content = form.Content
+        topic.State = form.State
 
         if model.TopicModel.Save(topic) {
             c.Redirect(fmt.Sprintf("/topic/%d", topic.Id()))
@@ -62,6 +63,7 @@ func (c *Topic) Edit() {
 
         topic.Title = form.Title
         topic.Content = form.Content
+        topic.State = form.State
 
         if !model.TopicModel.Save(topic) {
             form.Message = "could not save to db"

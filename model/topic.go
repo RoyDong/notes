@@ -8,11 +8,16 @@ import (
 )
 
 
+const (
+    TopicStateEdit = 0
+    TopicStatePublished = 1
+)
 
 type Topic struct {
     id int64
 
     Title, Content string
+    State int
     CreatedAt, UpdatedAt time.Time
 }
 
@@ -23,11 +28,13 @@ func (t *Topic) Id() int64 {
 
 type TopicForm struct {
     Title, Content, Message string
+    State int
 }
 
 func (f *TopicForm) LoadData(r *potato.Request) {
     f.Title,_ = r.String("title")
     f.Content,_ = r.String("content")
+    f.State,_ = r.Int("state")
 }
 
 var TopicModel = &topicModel{"topic"}
@@ -41,7 +48,7 @@ type Scanner interface{
 }
 
 func (m *topicModel) Search(q map[string]string, page, limit int) []*Topic {
-    sql := fmt.Sprintf("SELECT `id`,`title`,`content`,`created_at`,`updated_at` FROM `%s`", m.table)
+    sql := fmt.Sprintf("SELECT `id`,`title`,`content`,`state`,`created_at`,`updated_at` FROM `%s`", m.table)
     l := len(q)
     args := make([]interface{}, 0, l + 2)
     if l > 0 {
@@ -76,7 +83,7 @@ func (m *topicModel) Search(q map[string]string, page, limit int) []*Topic {
 func (m *topicModel) loadTopic(row Scanner) *Topic {
     t := new(Topic)
     var ct, ut int64
-    if e := row.Scan(&t.id, &t.Title, &t.Content , &ct, &ut); e != nil {
+    if e := row.Scan(&t.id, &t.Title, &t.Content , &t.State, &ct, &ut); e != nil {
         potato.L.Println(e)
         return nil
     }
@@ -87,7 +94,7 @@ func (m *topicModel) loadTopic(row Scanner) *Topic {
 }
 
 func (m *topicModel) Find(id int) *Topic {
-    sql := fmt.Sprintf("select `id`,`title`,`content`,`created_at`,`updated_at` from %s where `id`='%d'", m.table, id)
+    sql := fmt.Sprintf("select `id`,`title`,`content`,`state`,`created_at`,`updated_at` from %s where `id`='%d'", m.table, id)
 
     return m.loadTopic(potato.D.QueryRow(sql))
 }
@@ -104,9 +111,9 @@ func (m *topicModel) Update(t *Topic) bool {
     now := time.Now()
     t.UpdatedAt = now
     _,e := potato.D.Exec(fmt.Sprintf("UPDATE `%s` SET" +
-            " `title`=?,`content`=?,`created_at`=?,`updated_at`=?" +
+            " `title`=?,`content`=?,`state`=?,`created_at`=?,`updated_at`=?" +
             " WHERE `id`=?", m.table),
-            t.Title, t.Content, t.CreatedAt.UnixNano(), now.UnixNano(), t.id)
+            t.Title, t.Content, t.State, t.CreatedAt.UnixNano(), now.UnixNano(), t.id)
     if e != nil {
         potato.L.Println(e)
         return false
@@ -120,9 +127,9 @@ func (m *topicModel) Add(t *Topic) bool {
     t.CreatedAt = now
     t.UpdatedAt = now
     t.id = potato.D.Insert(fmt.Sprintf("INSERT INTO `%s`" +
-            "(`title`,`content`,`created_at`,`updated_at`)" +
-            "VALUES(?,?,?,?)", m.table),
-            t.Title, t.Content, now.UnixNano(), now.UnixNano())
+            "(`title`,`content`,`state`,`created_at`,`updated_at`)" +
+            "VALUES(?,?,?,?,?)", m.table),
+            t.Title, t.Content, t.State, now.UnixNano(), now.UnixNano())
 
     return t.id > 0
 }
