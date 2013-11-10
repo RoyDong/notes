@@ -6,6 +6,11 @@
             controller: main
             action: Index
             pattern: /
+        -
+            name: about
+            controller: main
+            action: About
+            pattern: /about
 
 -
     prefix: /topic

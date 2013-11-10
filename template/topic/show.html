@@ -1,13 +1,9 @@
 {{$ := .Data}}
 {{.Title $.Title}}
 {{.CSS "/css/main.css"}}
-    <p>{{$.Title}}</p>
-<div>{{html $.Content}}</div>
-<div>
-    <p style="text-align:right;font-size:12px;">
-        最后修改：{{$.UpdatedAt.Format "2006-01-02 15:04"}}
-    </p>
-    <p style="text-align:right;font-size:12px;">
-        创建于：{{$.CreatedAt.Format "2006-01-02 15:04"}}
-    </p>
+<div class="topic-title">{{$.Title}}</div>
+<div class="topic-content">{{html $.Content}}</div>
+<div class="topic-time">
+    <p>最后修改：{{$.UpdatedAt.Format "2006-01-02 15:04"}}</p>
+    <p>创建于：{{$.CreatedAt.Format "2006-01-02 15:04"}}</p>
 </div>
