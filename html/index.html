@@ -2,8 +2,10 @@
 <html>
     <head>
         <title>Study Notes</title>
-        <link rel="stylesheet" href="http://notes.roydong.com/css/main.css">
-        <script type="text/javascript" src="http://notes.roydong.com/jquery.min.js" ></script>
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+        <link rel="stylesheet" href="http://notes.roydong.com/css/main.css"/>
+        <script type="text/javascript" src="http://notes.roydong.com/js/jquery.min.js" ></script>
+        <script type="text/javascript" src="http://notes.roydong.com/tinymce_jquery/js/tinymce/tinymce.min.js" ></script>
     </head>
     <body style="background-color: #e5e5e5;">
         <div id="header">
@@ -18,8 +20,8 @@
             </div>
             <div class="clear"></div>
         </div>
-        <div id="body">
-            <div id="body-border" >
+        <div class="topic-box">
+            <div class="topic-border" >
                 <div class="topic-title">关于Redhat和Ubuntu的一点看法</div>
                 <div class="topic-content">
                     <p>在我刚接触linux的前2年特别喜欢用Ubuntu Desktop，想进一步了解Ubuntu Server。找到一篇发表于2006年的文章(1)，觉得内容挺有意思，特翻译过来。</p>
@@ -45,6 +47,37 @@
                     <p>2，一个linux商业记者</p>
                     <p>3，一个linux发行版</p>
                 </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="comments-box">
+            <div class="comments-title">评论：</div>
+            <div class="comments-list">
+                <div class="comment-box">
+                    <div class="comment-user">roy@zuo.com说：(2013-12-09)</div>
+                    <span class="comment-content">相信Redhat已经开始明白，失去桌面用户不仅仅只意味着“失去那些不愿付一分钱的穷逼”（随便说下，这里不是引用），因为这些穷逼当中有很多是系统管理员，他们很快就会考虑服务器应该装哪个系统，Redhat还是Ubuntu？如果你已经在自己家里安装了Ubuntu服务器，那么两种选择都可以。放弃桌面用户的Redhat等于是搬起石头砸自己的脚。有趣的是，他们为了赚取更多的钱而拼命去满足那些没有灵魂的企业用户。然而万事以人为本，在这些面无表情的企业后面是成千上万的系统管理员，他们现在全都喜欢用Ubuntu，并且</span>
+                </div>
+                <div class="comment-box">
+                    <div class="comment-user">roy@zuo.com说：(2013-12-09)</div>
+                    <span class="comment-content">相信Redhat已经开始明白，失去桌面用户不仅仅只意味着“失去那些不愿付一分钱的穷逼”（随便说下，这里不是引用），因为这些穷逼当中有很多是系统管理员，他们很快就会考虑服务器应该装哪个系统，Redhat还是Ubuntu？如果你已经在自己家里安装了Ubuntu服务器，那么两种选择都可以。放弃桌面用户的Redhat等于是搬起石头砸自己的脚。有趣的是，他们为了赚取更多的钱而拼命去满足那些没有灵魂的企业用户。然而万事以人为本，在这些面无表情的企业后面是成千上万的系统管理员，他们现在全都喜欢用Ubuntu，并且</span>
+                </div>
+                <div class="comment-box">
+                    <div class="comment-user">roy@zuo.com说：(2013-12-09)</div>
+                    <span class="comment-content">相信Redhat已经开始明白，失去桌面用户不仅仅只意味着“失去那些不愿付一分钱的穷逼”（随便说下，这里不是引用），因为这些穷逼当中有很多是系统管理员，他们很快就会考虑服务器应该装哪个系统，Redhat还是Ubuntu？如果你已经在自己家里安装了Ubuntu服务器，那么两种选择都可以。放弃桌面用户的Redhat等于是搬起石头砸自己的脚。有趣的是，他们为了赚取更多的钱而拼命去满足那些没有灵魂的企业用户。然而万事以人为本，在这些面无表情的企业后面是成千上万的系统管理员，他们现在全都喜欢用Ubuntu，并且</span>
+                </div>
+            </div>
+            <div class="comment-form">
+                <textarea name="content" id="comment-content"></textarea>
+                <script>
+                    tinymce.init({
+                        selector:'#comment-content',
+                        height: 200,
+                        width: 940,
+                        content_css: "/css/content.css",
+                        plugins: "",
+                        toolbar: "undo redo |  bold italic  | link image anchor | emoticons",
+                    });
+                </script>
             </div>
             <div class="clear"></div>
         </div>

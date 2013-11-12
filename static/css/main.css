@@ -3,6 +3,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     padding: 0px;
     border: 0px;
     color: #666;
+    font-family: Verdana, Geneva, sans-serif;
 }
 
 
@@ -24,7 +25,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     margin: 16px 0px 0px 80px;
     font-style: italic; 
     font-weight: bold;
-    font-size: 36px;
+    font-size: 34px;
     color: #3a4b3e;
     line-height: 36px;
 }
@@ -41,7 +42,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     width: 100%;
     border: 1px solid #e5e5e5;
     border-right: 0px;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 18px;
     vertical-align: middle;
     border-radius: 3px 0px 0px 3px;
@@ -51,7 +52,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     color: #000;
     height: 30px;
     width: 65px;
-    font-size: 12px;
+    font-size: 10px;
     margin: 21px 0px 0px 0px;
     background-color: #4d90fe;
     border-radius: 0px 3px 3px 0px;
@@ -65,7 +66,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 
 #main-menu a {
     color: #999;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 30px;
     vertical-align: middle;
     text-decoration: none;
@@ -80,20 +81,21 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     color: #555;
 }
 
-#body {
-    margin: 0px auto;
+.topic-box {
+    margin: 0px auto 20px;
     background-color: #fff;
     max-width: 960px;
     box-shadow: 0px 0px 1px 0px #aaa;
+    border-radius: 5px;
 }
 
-#body-border {
+.topic-border {
     float: left;
     margin: 100px 10px 20px 10px;
 }
 
 
-#body-border .topic-title {
+.topic-border .topic-title {
     font-size: 18px;
     font-weight: bold;
     color: #3a4b3e;
@@ -101,20 +103,58 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     margin-bottom: 30px;
 }
 
-#body-border .topic-content {
+.topic-border .topic-content {
+    font-size: 14px;
     margin-bottom: 30px;
 }
 
-#body-border .topic-content p {
+.topic-border .topic-content p {
+    color: #3a4b3e;
     line-height: 26px;
 }
 
-#body-border .topic-content p a {
+.topic-border .topic-content p a {
     color: #4d90fe;
     line-height: 26px;
 }
 
 .topic-time p {
-    font-size: 12px;
+    font-size: 10px;
     text-align: right;
+}
+
+.comments-box {
+    background-color: #fff;
+    margin: 0px auto 10px;
+    max-width: 960px;
+    box-shadow: 0px 0px 1px 0px #aaa;
+    border-radius: 5px;
+    color: #000;
+}
+.comments-title {
+    float: left;
+    font-size: 18px;
+    font-weight: bold;
+    color: #3a4b3e;
+    margin: 10px;
+}
+.comments-box .comments-list {
+    margin: 0px 10px 20px 10px;
+    float: left;
+}
+
+.comments-box .comments-list .comment-box {
+    float: left;
+    color: #666;
+    font-size: 12px;
+    margin: 10px 0px 30px 0px;
+}
+
+.comments-box .comments-list .comment-box .comment-user {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.comments-box .comment-form {
+    float: left;
+    margin: 0px 10px 20px 10px;
 }
