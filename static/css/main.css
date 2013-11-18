@@ -81,6 +81,10 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     color: #555;
 }
 
+#main-menu a.active {
+    color: #555;
+}
+
 .topic-box {
     margin: 0px auto 20px;
     background-color: #fff;
