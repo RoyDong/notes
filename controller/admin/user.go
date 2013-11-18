@@ -11,7 +11,7 @@ type User struct {
 }
 
 func (c *User) Init() {
-
+    c.Layout = "admin/layout"
 }
 
 func (c *User) Setting() {

@@ -1,27 +1,21 @@
 {{$ := .Data}}
 {{.Title "Admin - edit topic" }}
-{{.JS "/tinymce_jquery/js/tinymce/tinymce.min.js"}}
+{{.JS "/kindeditor/kindeditor-min.js"}}
+{{.JS "/kindeditor/lang/zh_CN.js"}}
 <center>
     <form action="/admin/topic/{{$.Id}}/edit" method="post">
         <textarea placeholder="title" style="width: 500px; height: 50px;" name="title" id="title" name="title">{{$.Title}}</textarea>
-        <textarea placeholder="content" name="content" id="content" name="content">{{$.Content}}</textarea>
+        <textarea placeholder="content" name="content" id="content">{{$.Content}}</textarea>
         <p>发布<input type="checkbox" name="state" {{if $.State}}checked{{end}} value="1"/></p>
         <input type="submit" value="submit"/>
     </form>
 </center>
 
 <script>
-    tinymce.init({
-        selector:'#content',
-        height: 700,
-        content_css: "/css/content.css",
-        plugins: [
-            "autolink link image anchor",
-            "print preview media fullpage",
-            "emoticons"
-        ],
-        toolbar: "insertfile undo redo | styleselect | bold italic  fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image anchor | emoticons",
-        theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
-        font_size_style_values: "12px,13px,14px,16px,18px,20px"
+    $(document).ready(function() {
+        var editor = KindEditor.create('#content', {
+            width: 960,
+            height: 700
+        });
     });
 </script>

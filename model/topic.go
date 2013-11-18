@@ -9,8 +9,9 @@ import (
 
 
 const (
-    TopicStateEdit = 0
+    TopicStateDraft = 0
     TopicStatePublished = 1
+    TopicStateDeleted = 1
 )
 
 type Topic struct {
@@ -41,10 +42,6 @@ var TopicModel = &topicModel{"topic"}
 
 type topicModel struct {
     table string
-}
-
-type Scanner interface{
-    Scan(args ...interface{}) error
 }
 
 func (m *topicModel) Search(q map[string]string, page, limit int) []*Topic {

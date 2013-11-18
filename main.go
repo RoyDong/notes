@@ -10,6 +10,7 @@ import (
 func init() {
     potato.Init()
 
+    //define template funcs
     potato.T.Funcs(map[string]interface{} {
     })
 

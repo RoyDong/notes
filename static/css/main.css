@@ -2,10 +2,10 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    color: #666;
     font-family: Verdana, Geneva, sans-serif;
 }
 
+*:focus { outline: none; }
 
 .clear {
     clear: both;
@@ -22,7 +22,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 
 #site-logo {
     float: left;
-    margin: 16px 0px 0px 80px;
+    margin: 16px 0px 0px 60px;
     font-style: italic; 
     font-weight: bold;
     font-size: 34px;
@@ -38,8 +38,9 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 }
 
 #search-box input {
-    height: 28px;
+    height: 24px;
     width: 100%;
+    padding: 2px;
     border: 1px solid #e5e5e5;
     border-right: 0px;
     font-size: 16px;
@@ -48,20 +49,23 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     border-radius: 3px 0px 0px 3px;
 }
 
+#search-box input:focus {
+    border: 1px solid #aaa;
+}
+
 #header button {
     color: #000;
     height: 30px;
     width: 65px;
     font-size: 10px;
     margin: 21px 0px 0px 0px;
-    background-color: #4d90fe;
     border-radius: 0px 3px 3px 0px;
 }
 
 #main-menu {
     float: right;
-    height: 21;
-    margin: 21px 80px 0px 0px;
+    height: 21px;
+    margin: 21px 60px 0px 0px;
 }
 
 #main-menu a {
@@ -70,14 +74,10 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     line-height: 30px;
     vertical-align: middle;
     text-decoration: none;
-    margin-left: 60px;
+    margin-left: 55px;
 }
 
 #main-menu a:hover {
-    color: #555;
-}
-
-#main-menu a.active {
     color: #555;
 }
 
@@ -145,16 +145,79 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 
 .comments-box .comments-list .comment-box {
     float: left;
-    color: #666;
-    font-size: 12px;
+    color: #3a4b3e;
+    font-size: 14px;
     margin: 10px 0px 30px 0px;
 }
 
-.comments-box .comments-list .comment-box .comment-user {
-    font-weight: bold;
+.comments-box .comments-list .comment-box .comment-title {
     margin-bottom: 5px;
+    color: #666;
 }
+
 .comments-box .comment-form {
     float: left;
     margin: 0px 10px 20px 10px;
 }
+
+.comment-form .comment-bar {
+    margin-top: 10px;
+}
+.comment-form .comment-bar input {
+    vertical-align: middle;
+}
+
+.comment-form .comment-bar input[type=text] {
+    width: 200px;
+    height: 20px;
+    margin-right: 22px;
+    margin-top: 6px;
+    line-height: 22px;
+    font-size: 12px;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    float: right;
+    padding: 2px;
+}
+
+.comment-form .comment-bar input[type=text]:focus {
+    border: 1px solid #aaa;
+}
+.comment-form .comment-bar button {
+    width: 100px;
+    height: 32px;
+    border-radius: 3px;
+    color: #000;
+    font-size: 12px;
+    float: right;
+}
+
+
+button.btn-bg {
+    background: #4285f4;
+    background: -webkit-linear-gradient(top,#4387fd,#4683ea);
+    background: linear-gradient(top,#4387fd,#4683ea);
+    /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4387fd,endColorstr=#4683ea,GradientType=1);*/
+}
+
+button.btn-bg:active {
+    background: #2265d4;
+}
+
+
+/**
+ comment
+ */
+ .ke-container-comment {
+    max-width: 938px;
+    display: block;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    overflow: hidden;
+ }
+
+ .ke-container-comment .ke-toolbar {
+    border-bottom: 1px solid #ccc;
+    padding: 2px 5px;
+    overflow: hidden;
+ }
