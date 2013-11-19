@@ -85,10 +85,21 @@ func (m *userModel) User(id int64) *User {
     return nil
 }
 
+func (m *userModel) Find(id int64) *User {
+    stmt := fmt.Sprintf("select `id`,`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at` from %s where `id`='%d'", m.tabel, id)
+
+    row := potato.D.QueryRow(stmt)
+    return m.loadUser(row)
+}
+
 func (m *userModel) FindByEmail(email string) *User {
     stmt := fmt.Sprintf("select `id`,`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at` from %s where `email`='%s'", m.tabel, email)
 
     row := potato.D.QueryRow(stmt)
+    return m.loadUser(row)
+}
+
+func (m *userModel) loadUser(row Scanner) *User {
     u := new(User)
     var ct, ut int64
     if e := row.Scan(&u.id, &u.Email, &u.Name, &u.passwd, &u.salt, &ct, &ut); e != nil {
@@ -99,6 +110,7 @@ func (m *userModel) FindByEmail(email string) *User {
     u.UpdatedAt = time.Unix(0, ut)
     return u
 }
+
 
 func (m *userModel) Exists(email string) bool {
     stmt := fmt.Sprintf("select count(id) c from %s where `email`='%s'", m.tabel, email)

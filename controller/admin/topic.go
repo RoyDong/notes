@@ -42,7 +42,7 @@ func (c *Topic) New() {
 }
 
 func (c *Topic) Edit() {
-    id,_ := c.Request.Int("id")
+    id,_ := c.Request.Int64("id")
     topic := model.TopicModel.Find(id)
     if topic == nil {
         potato.Panic(http.StatusNotFound, "topic not found")
@@ -75,14 +75,6 @@ func (c *Topic) Edit() {
 }
 
 
-type topicListView struct {
-    Page int
-    PrevPage int
-    NextPage int
-    Size int
-    Topics []*model.Topic
-}
-
 func (c *Topic) List() {
     q := make(map[string]string, 2)
     title,_ := c.Request.String("title")
@@ -100,11 +92,11 @@ func (c *Topic) List() {
     size,_ := c.Request.Int("size")
     if size < 1 { size = 200 }
 
-    c.Render("admin/topic/list", &topicListView{
-        Page: page,
-        PrevPage: page - 1,
-        NextPage: page + 1,
-        Size: size,
-        Topics: model.TopicModel.Search(q, page, size),
+    c.Render("admin/topic/list", &map[string]interface{} {
+        "page": page,
+        "prevpage": page - 1,
+        "nextpage": page + 1,
+        "size": size,
+        "topics": model.TopicModel.Search(q),
     })
 }

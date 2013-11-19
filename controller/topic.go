@@ -14,7 +14,7 @@ type Topic struct {
 
 func (c *Topic) List() {
     q := make(map[string]string, 2)
-    q["state"] = fmt.Sprintf("%s", model.TopicStatePublished)
+    q["state"] = fmt.Sprintf("%d", model.TopicStatePublished)
 
     title,_ := c.Request.String("title")
     if len(title) > 0 { q["title"] = title }
@@ -33,12 +33,12 @@ func (c *Topic) List() {
         "prevpage": page - 1,
         "nextpage": page + 1,
         "size": size,
-        "topics": model.TopicModel.Search(q, page, size),
+        "topics": model.TopicModel.Search(q),
     })
 }
 
 func (c *Topic) Show() {
-    id,_ := c.Request.Int("id")
+    id,_ := c.Request.Int64("id")
 
     if topic := model.TopicModel.Find(id); topic != nil {
         c.Render("topic/show", topic)

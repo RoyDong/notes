@@ -23,6 +23,15 @@
             keys: [id]
 
 -
+    prefix: /comment
+    routes:
+        -
+            name: comment_new
+            controller: comment
+            action: New
+            pattern: /new
+
+-
     prefix: /admin
     routes:
         -

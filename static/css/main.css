@@ -5,6 +5,10 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     font-family: Verdana, Geneva, sans-serif;
 }
 
+body {
+    background-color: #e5e5e5;
+}
+
 *:focus { outline: none; }
 
 .clear {
@@ -85,6 +89,10 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
     color: #555;
 }
 
+#body {
+    padding: 90px 0 0 0;
+}
+
 .topic-box {
     margin: 0px auto 20px;
     background-color: #fff;
@@ -95,7 +103,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 
 .topic-border {
     float: left;
-    margin: 100px 10px 20px 10px;
+    margin: 50px 10px 30px;
 }
 
 
@@ -109,7 +117,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 
 .topic-border .topic-content {
     font-size: 14px;
-    margin-bottom: 30px;
+    margin-bottom: 100px;
 }
 
 .topic-border .topic-content p {
@@ -123,7 +131,7 @@ html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
 }
 
 .topic-time p {
-    font-size: 10px;
+    font-size: 12px;
     text-align: right;
 }
 
@@ -209,19 +217,3 @@ button.btn-bg:active {
 }
 
 
-/**
- comment
- */
- .ke-container-comment {
-    max-width: 938px;
-    display: block;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    overflow: hidden;
- }
-
- .ke-container-comment .ke-toolbar {
-    border-bottom: 1px solid #ccc;
-    padding: 2px 5px;
-    overflow: hidden;
- }

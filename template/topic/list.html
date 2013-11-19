@@ -1,13 +1,18 @@
 {{.F "menu_class_index" "active"}}
 {{.F "menu_class_about" ""}}
 {{$ := .Data}}
-{{range $v := $.topics}}
+<div class="topic-box">
+    <div class="topic-border">
+    {{range $v := $.topics}}
+        <div>
+            <p><a href="/topic/{{$v.Id}}" >Title: {{$v.Title}}</a></p>
+        </div>
+    {{end}}
     <div>
-        <p><a href="/topic/{{$v.Id}}" >Title: {{$v.Title}}</a></p>
+        {{$.page}}
+        <span><a href="/admin/topic/?page={{$.prevpage}}">prev</a></span>
+        <span><a href="/admin/topic/?page={{$.nextpage}}">next</a></span>
     </div>
-{{end}}
-<div>
-    {{$.Page}}
-    <span><a href="/admin/topic/?page={{$.prevpage}}">prev</a></span>
-    <span><a href="/admin/topic/?page={{$.nextpage}}">next</a></span>
+    </div>
+    <div class="clear"></div>
 </div>

@@ -20,6 +20,7 @@ func init() {
         "error": new(controller.Error),
         "main": new(controller.Main),
         "topic": new(controller.Topic),
+        "comment": new(controller.Comment),
 
         "admin_user": new(admin.User),
         "admin_topic": new(admin.Topic),

@@ -11,7 +11,7 @@ import (
 const (
     TopicStateDraft = 0
     TopicStatePublished = 1
-    TopicStateDeleted = 1
+    TopicStateDeleted = 2
 )
 
 type Topic struct {
@@ -24,6 +24,10 @@ type Topic struct {
 
 func (t *Topic) Id() int64 {
     return t.id
+}
+
+func (t *Topic) Comments() []*Comment {
+    return CommentModel.FindBy("tid", t.id, "created_at DESC")
 }
 
 
@@ -44,7 +48,7 @@ type topicModel struct {
     table string
 }
 
-func (m *topicModel) Search(q map[string]string, page, limit int) []*Topic {
+func (m *topicModel) Search(q map[string]string) []*Topic {
     sql := fmt.Sprintf("SELECT `id`,`title`,`content`,`state`,`created_at`,`updated_at` FROM `%s`", m.table)
     l := len(q)
     args := make([]interface{}, 0, l + 2)
@@ -58,16 +62,13 @@ func (m *topicModel) Search(q map[string]string, page, limit int) []*Topic {
         sql = sql + " WHERE " + strings.Join(c, " AND ")
     }
 
-    if page < 1 { page = 1}
-    args = append(args, (page - 1) * limit, limit)
-
-    rows, e := potato.D.Query(sql + " LIMIT ?,?", args...)
+    rows, e := potato.D.Query(sql, args...)
     if e != nil {
         potato.L.Println(e)
         return nil
     }
 
-    topics := make([]*Topic, 0, limit)
+    topics := make([]*Topic, 0)
     for rows.Next() {
         if t := m.loadTopic(rows); t != nil {
             topics = append(topics, t)
@@ -90,7 +91,7 @@ func (m *topicModel) loadTopic(row Scanner) *Topic {
     return t
 }
 
-func (m *topicModel) Find(id int) *Topic {
+func (m *topicModel) Find(id int64) *Topic {
     sql := fmt.Sprintf("select `id`,`title`,`content`,`state`,`created_at`,`updated_at` from %s where `id`='%d'", m.table, id)
 
     return m.loadTopic(potato.D.QueryRow(sql))
@@ -108,9 +109,10 @@ func (m *topicModel) Update(t *Topic) bool {
     now := time.Now()
     t.UpdatedAt = now
     _,e := potato.D.Exec(fmt.Sprintf("UPDATE `%s` SET" +
-            " `title`=?,`content`=?,`state`=?,`created_at`=?,`updated_at`=?" +
+            " `title`=?,`content`=?,`state`=?,`updated_at`=?" +
             " WHERE `id`=?", m.table),
-            t.Title, t.Content, t.State, t.CreatedAt.UnixNano(), now.UnixNano(), t.id)
+            t.Title, t.Content, t.State, now.UnixNano(), t.id)
+
     if e != nil {
         potato.L.Println(e)
         return false
