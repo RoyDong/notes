@@ -157,6 +157,7 @@ body {
 }
 .comments-box .comments-list {
     margin: 0px 10px 20px 10px;
+    width: 940px;
     float: left;
 }
 
