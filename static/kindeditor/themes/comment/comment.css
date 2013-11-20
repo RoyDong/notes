@@ -1,0 +1,11 @@
+.ke-container-comment {
+    max-width: 938px;
+    display: block;
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+.ke-container-comment .ke-toolbar {
+    border-bottom: 1px solid #ccc;
+    padding: 2px 5px;
+    overflow: hidden;
+}
