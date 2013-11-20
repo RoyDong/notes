@@ -27,7 +27,7 @@ func (t *Topic) Id() int64 {
 }
 
 func (t *Topic) Comments() []*Comment {
-    return CommentModel.FindBy("tid", t.id, "created_at DESC")
+    return CommentModel.FindBy("tid", t.id, "created_at ASC")
 }
 
 

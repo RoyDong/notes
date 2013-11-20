@@ -1,4 +1,4 @@
-html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button {
+html, h1, h2, h3, h4, h5, h6, body, div, span, input, p, button, form {
     margin: 0px;
     padding: 0px;
     border: 0px;
@@ -41,7 +41,7 @@ body {
     float: left;
     margin: 21px 0px 0px 80px;
     max-width: 598px;
-    width: 28%;
+    width: 30%;
 }
 
 #search-box input {
@@ -134,8 +134,9 @@ body {
 }
 
 .topic-time p {
-    font-size: 12px;
+    font-size: 10px;
     text-align: right;
+    color: #999;
 }
 
 .comments-box {
@@ -163,12 +164,18 @@ body {
     float: left;
     color: #3a4b3e;
     font-size: 14px;
-    margin: 10px 0px 30px 0px;
+    margin: 10px 0px 20px 0px;
+    width: 940px;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .comments-box .comments-list .comment-box .comment-title {
     margin-bottom: 5px;
-    color: #666;
+    color: #999;
+    font-size: 12px;
+}
+.comments-box .comments-list .comment-box .comment-content {
+    margin-bottom: 10px;
 }
 
 .comments-box .comment-form {
@@ -183,7 +190,19 @@ body {
     vertical-align: middle;
 }
 
+.comment-form .comment-bar #error-message {
+    display: none;
+    color: red;
+    width: 200px;
+    height: 20px;
+    margin-top: 6px;
+    line-height: 22px;
+    font-size: 12px;
+    float: left;
+}
+
 .comment-form .comment-bar input[type=text] {
+    display: none;
     width: 200px;
     height: 20px;
     margin-right: 22px;

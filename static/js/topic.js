@@ -11,19 +11,39 @@ $(document).ready(function() {
         ]
     });
 
-
+    var msg = $('#error-message');
+    var isSubmiting = false;
+    var commentList = $('.comments-list');
 
     $('#comment-submit').click(function() {
+        if (isSubmiting) {
+            msg.text("正在提交，请耐心等待");
+            msg.css("display", "block");
+            return;
+        }
+
+        if (editor.html().length < 10) {
+            msg.css("display", "block");
+            msg.text("不能少于10个字");
+            return;
+        }
+
+        isSubmiting = true;
+        msg.text("");
+        msg.css("display", "none");
         var me = $(this);
         $.ajax({
             url: me.data('url'),
             method: 'post',
             data: {tid: me.data('tid'), content: editor.html()},
-            success: function(data) {
-                console.log(data);
+            complete: function() {
+                isSubmiting = false;
             },
-            failure: function(data) {
-                console.log(data);
+            success: function(data) {
+                editor.html("");
+                commentList.append(data);
+            },
+            failure: function() {
             }
         });
     });

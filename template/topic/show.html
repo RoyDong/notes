@@ -18,10 +18,7 @@
     {{if len $.Comments}}
     <div class="comments-list">
         {{range $c := $.Comments}}
-        <div class="comment-box">
-            <div class="comment-title">roy@zuo.com说：({{$c.CreatedAt.Format "2006-01-02 15:04"}})</div>
-            <div class="comment-content">{{html $c.Content}}</div>
-        </div>
+            {{template "topic/_comment" $c}}
         {{end}}
     </div>
     {{end}}
@@ -31,6 +28,7 @@
             <button data-url="/comment/new" data-tid="{{$.Id}}" 
                     id="comment-submit" class="btn-bg">提交</button>
             <input placeholder="如果可以请留下名字或者邮箱" type="text" />
+            <span id="error-message"></span>
             <div class="clear"></div>
         </div>
     </div>

@@ -33,12 +33,7 @@ func (c *Comment) New() {
     comment.SetTopic(topic)
 
     if model.CommentModel.Save(comment) {
-        c.RenderJson(&map[string]interface{} {
-            "id": comment.Id(),
-            "tid": comment.Tid(),
-            "created_at": comment.CreatedAt.UnixNano(),
-            "updated_at": comment.UpdatedAt.UnixNano(),
-        })
+        c.RenderPartial("topic/_comment", comment)
     } else {
         potato.Panic(http.StatusInternalServerError, "cant save to db")
     }
