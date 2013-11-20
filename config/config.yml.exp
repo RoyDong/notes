@@ -1,0 +1,22 @@
+name: Topics
+env: prod
+
+http:
+    host: name.com
+    port: 80
+
+log_dir: log/
+static_dir: ~
+
+error_handler:
+    not_found: {controller: Error, action: NotFound}
+    server_error: {controller: Error, action: ServerError}
+
+
+sql:
+    host: localhost
+    port: 3306
+    user: root
+    pass: 123
+    dbname: topic
+
