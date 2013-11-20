@@ -4,6 +4,10 @@ env: prod
 http:
     host: name.com
     port: 80
+    redirections:
+        .*roydong.com: notes.roydong.com
+        
+
 
 log_dir: log/
 static_dir: ~
