@@ -15,6 +15,7 @@
 </div>
 <div class="comments-box">
     <div class="comments-title">评论：</div>
+    {{if len $.Comments}}
     <div class="comments-list">
         {{range $c := $.Comments}}
         <div class="comment-box">
@@ -23,6 +24,7 @@
         </div>
         {{end}}
     </div>
+    {{end}}
     <div class="comment-form">
         <textarea name="content" id="comment-content" ></textarea>
         <div class="comment-bar">
