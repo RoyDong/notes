@@ -28,10 +28,13 @@ body {
     float: left;
     margin: 16px 0px 0px 60px;
     font-style: italic; 
-    font-weight: bold;
     font-size: 34px;
-    color: #3a4b3e;
     line-height: 36px;
+}
+
+#site-logo a {
+    color: #3a4b3e;
+    text-decoration: none;
 }
 
 #search-box {
