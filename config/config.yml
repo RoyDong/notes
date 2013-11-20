@@ -2,7 +2,7 @@ name: Topics
 env: dev
 
 http:
-    host: notes.roydong.com
+    host: roydong.com
     port: 80
 
 log_dir: log/
