@@ -270,7 +270,7 @@ button.btn-bg:active {
     background: linear-gradient(top,#eeefee,#eeefcc);
 }
 #body a.list-title:active {
-    background: #eeefcc;
+    background: #eeeecc;
 }
 #body .list-title span {
     font-size: 10px;
