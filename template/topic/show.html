@@ -2,33 +2,36 @@
 {{.Title $.Title}}
 {{.CSS "/css/main.css"}}
 {{.JS "/kindeditor/kindeditor-min.js" "/kindeditor/lang/zh_CN.js" "/js/topic.js"}}
-<div class="topic-box">
-    <div class="topic-border">
-        <div class="topic-title">{{$.Title}}</div>
-        <div class="topic-content">{{html $.Content}}</div>
-        <div class="topic-time">
-            <p>最后修改：{{$.UpdatedAt.Format "2006-01-02 15:04"}}</p>
-            <p>创建于：{{$.CreatedAt.Format "2006-01-02 15:04"}}</p>
+{{include "_header"}}
+<div id="body">
+    <div class="topic-box">
+        <div class="topic-border">
+            <div class="topic-title">{{$.Title}}</div>
+            <div class="topic-content">{{html $.Content}}</div>
+            <div class="topic-time">
+                <p>最后修改：{{$.UpdatedAt.Format "2006-01-02 15:04"}}</p>
+                <p>创建于：{{$.CreatedAt.Format "2006-01-02 15:04"}}</p>
+            </div>
         </div>
+        <div class="clear"></div>
     </div>
-    <div class="clear"></div>
-</div>
-<div class="comments-box">
-    <div class="comments-title">评论：</div>
-    <div class="comments-list">
-        {{range $c := $.Comments}}
-            {{template "topic/_comment" $c}}
-        {{end}}
-    </div>
-    <div class="comment-form">
-        <textarea name="content" id="comment-content" ></textarea>
-        <div class="comment-bar">
-            <button data-url="/comment/new" data-tid="{{$.Id}}" 
-                    id="comment-submit" class="btn-bg">提交</button>
-            <input placeholder="如果可以请留下名字或者邮箱" type="text" />
-            <span id="error-message"></span>
-            <div class="clear"></div>
+    <div class="comments-box">
+        <div class="comments-title">评论：</div>
+        <div class="comments-list">
+            {{range $c := $.Comments}}
+                {{template "topic/_comment" $c}}
+            {{end}}
         </div>
+        <div class="comment-form">
+            <textarea name="content" id="comment-content" ></textarea>
+            <div class="comment-bar">
+                <button data-url="/comment/new" data-tid="{{$.Id}}" 
+                        id="comment-submit" class="btn-bg">提交</button>
+                <input placeholder="如果可以请留下名字或者邮箱" type="text" />
+                <span id="error-message"></span>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear"></div>
     </div>
-    <div class="clear"></div>
 </div>

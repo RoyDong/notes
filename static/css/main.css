@@ -106,6 +106,7 @@ body {
 
 .topic-border {
     float: left;
+    width: 940px;
     margin: 50px 10px 30px;
 }
 
@@ -229,6 +230,11 @@ body {
 }
 
 
+
+button.btn-bg-disable {
+    background: #999;
+}
+
 button.btn-bg {
     background: #4285f4;
     background: -webkit-linear-gradient(top,#4387fd,#4683ea);
@@ -241,3 +247,32 @@ button.btn-bg:active {
 }
 
 
+
+/**
+ * list
+ */
+ 
+#body a.list-title {
+    display: block;
+    width: 898px;
+    font-size: 14px;
+    line-height: 25px;
+    text-decoration: none;
+    border-bottom: 1px solid #e5e5e5;
+    color: #3a4b3e;
+    border-radius: 5px;
+    margin:0 20px 10px 20px;
+    padding: 20px 5px 0 5px;
+}
+#body a.list-title:hover {
+    background: #eeefcc;
+    background: -webkit-linear-gradient(top,#eeefee,#eeefcc);
+    background: linear-gradient(top,#eeefee,#eeefcc);
+}
+#body a.list-title:active {
+    background: #eeefcc;
+}
+#body .list-title span {
+    font-size: 10px;
+    color: #999;
+}

@@ -5,8 +5,9 @@ http:
     host: name.com
     port: 80
     redirections:
-        .*roydong.com: notes.roydong.com
-        
+        -
+            rexp: .*roydong.com
+            host: notes.roydong.com
 
 
 log_dir: log/

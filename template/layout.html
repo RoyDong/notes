@@ -6,21 +6,8 @@
         <link rel="stylesheet" href="/css/main.css"/>
         {{.CSS}}
         <script type="text/javascript" src="/js/jquery.min.js" ></script>
+        <script type="text/javascript" src="/js/search.js" ></script>
         {{.JS}}
     </head>
-    <body>
-        <div id="header">
-            <div id="site-logo"><a href="/">Study Notes</a></div>
-            <div id="search-box">
-                <input type="text" id="search" />
-            </div>
-            <button class="btn-bg">Go</button>
-            <div id="main-menu">
-                <a href="/" class="{{.F "menu_class_index"}}">首页</a>
-                <a href="/about" class="{{.F "menu_class_about"}}">关于</a>
-            </div>
-            <div class="clear"></div>
-        </div>
-        <div id="body">{{.Content}}</div>
-    </body>
+    <body>{{.Content}}</body>
 </html>

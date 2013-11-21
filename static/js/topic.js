@@ -28,16 +28,21 @@ $(document).ready(function() {
             return;
         }
 
+        var me = $(this);
         isSubmiting = true;
         msg.text("");
         msg.css("display", "none");
-        var me = $(this);
+        me.removeClass("btn-bg");
+        me.addClass("btn-bg-disable");
+
         $.ajax({
             url: me.data('url'),
             method: 'post',
             data: {tid: me.data('tid'), content: editor.html()},
             complete: function() {
                 isSubmiting = false;
+                me.removeClass("btn-bg-disable");
+                me.addClass("btn-bg");
             },
             success: function(data) {
                 editor.html("");

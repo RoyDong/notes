@@ -78,6 +78,40 @@ func (m *topicModel) Search(q map[string]string) []*Topic {
     return topics
 }
 
+func (m *topicModel) SearchBy(k, v string, order string, limit ...int) []*Topic {
+    var where string
+    var params = make([]interface{}, 0, 1)
+    if len(v) > 0 {
+        where = fmt.Sprintf("WHERE `%s` REGEXP ?", k)
+        params = append(params, v)
+    }
+
+    sql := fmt.Sprintf(
+            "SELECT `id`,`title`,`content`,`state`,`created_at`,`updated_at` " +
+            "FROM `%s` %s ORDER BY %s", m.table, where, order)
+
+    if len(limit) == 1 {
+        sql = fmt.Sprintf("%s LIMIT %d", sql, limit[0])
+    } else if len(limit) == 2 {
+        sql = fmt.Sprintf("%s LIMIT %d, %d", sql, limit[0], limit[1])
+    }
+
+    rows, e := potato.D.Query(sql, params...)
+    if e != nil {
+        potato.L.Println(e)
+        return nil
+    }
+
+    topics := make([]*Topic, 0)
+    for rows.Next() {
+        if c := m.loadTopic(rows); c != nil {
+            topics = append(topics, c)
+        }
+    }
+
+    return topics
+}
+
 func (m *topicModel) loadTopic(row Scanner) *Topic {
     t := new(Topic)
     var ct, ut int64

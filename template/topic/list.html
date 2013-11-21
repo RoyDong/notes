@@ -1,18 +1,16 @@
-{{.F "menu_class_index" "active"}}
-{{.F "menu_class_about" ""}}
-{{$ := .Data}}
-<div class="topic-box">
-    <div class="topic-border">
-    {{range $v := $.topics}}
-        <div>
-            <p><a href="/topic/{{$v.Id}}" >Title: {{$v.Title}}</a></p>
+{{include "_header" "index" "active" "about" "" "q" .Data.q}}
+<div id="body">
+    <div class="topic-box">
+        <div class="topic-border">
+        {{range $v := .Data.topics}}
+        <a href="/topic/{{$v.Id}}" class="list-title" >
+            {{$v.Title}}
+            <span>({{$v.CreatedAt.Format "2006-01-02 15:04"}})</span>
+        </a>
+        {{else}}
+        Nothing is found
+        {{end}}
         </div>
-    {{end}}
-    <div>
-        {{$.page}}
-        <span><a href="/admin/topic/?page={{$.prevpage}}">prev</a></span>
-        <span><a href="/admin/topic/?page={{$.nextpage}}">next</a></span>
+        <div class="clear"></div>
     </div>
-    </div>
-    <div class="clear"></div>
 </div>
