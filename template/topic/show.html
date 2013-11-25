@@ -1,7 +1,7 @@
 {{$ := .Data}}
 {{.Title $.Title}}
-{{.CSS "/css/main.css"}}
-{{.JS "/kindeditor/kindeditor-min.js" "/kindeditor/lang/zh_CN.js" "/js/topic.js"}}
+{{.CSS "/css/main.css" "/kindeditor/plugins/code/prettify.css"}}
+{{.JS "/kindeditor/kindeditor-min.js" "/kindeditor/lang/zh_CN.js" "/js/topic.js" "/kindeditor/plugins/code/prettify.js"}}
 {{include "_header"}}
 <div id="body">
     <div class="topic-box">

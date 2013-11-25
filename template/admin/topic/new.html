@@ -1,7 +1,7 @@
 {{$ := .Data}}
 {{.Title "Admin - new topic" }}
-{{.JS "/kindeditor/kindeditor-min.js"}}
-{{.JS "/kindeditor/lang/zh_CN.js"}}
+{{.CSS "/kindeditor/plugins/code/prettify.css"}}
+{{.JS "/kindeditor/kindeditor-min.js" "/kindeditor/lang/zh_CN.js" "/kindeditor/plugins/code/prettify.js"}}
 <center>
     {{$.Message}}
     <form action="/admin/topic/new" method="post" >
@@ -18,5 +18,7 @@
             width: 960,
             height: 700
         });
+
+        prettyPrint();
     });
 </script>

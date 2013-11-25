@@ -1,7 +1,7 @@
 {{$ := .Data}}
 {{.Title "Admin - edit topic" }}
-{{.JS "/kindeditor/kindeditor-min.js"}}
-{{.JS "/kindeditor/lang/zh_CN.js"}}
+{{.CSS "/kindeditor/plugins/code/prettify.css"}}
+{{.JS "/kindeditor/kindeditor-min.js" "/kindeditor/lang/zh_CN.js" "/kindeditor/plugins/code/prettify.js"}}
 <center>
     <form action="/admin/topic/{{$.Id}}/edit" method="post">
         <textarea placeholder="title" style="width: 500px; height: 50px;" name="title" id="title" name="title">{{$.Title}}</textarea>
@@ -17,5 +17,7 @@
             width: 960,
             height: 700
         });
+
+        prettyPrint();
     });
 </script>

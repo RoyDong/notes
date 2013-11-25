@@ -79,10 +79,11 @@ func (m *topicModel) Search(q map[string]string) []*Topic {
 }
 
 func (m *topicModel) SearchBy(k, v string, order string, limit ...int) []*Topic {
-    var where string
     var params = make([]interface{}, 0, 1)
+    var where = "WHERE `state` = ?"
+    params = append(params, TopicStatePublished)
     if len(v) > 0 {
-        where = fmt.Sprintf("WHERE `%s` REGEXP ?", k)
+        where = fmt.Sprintf("%s AND `%s` REGEXP ?", where, k)
         params = append(params, v)
     }
 
