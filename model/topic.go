@@ -80,9 +80,12 @@ func (m *topicModel) Search(q map[string]string) []*Topic {
 }
 
 func (m *topicModel) SearchBy(k, v string, order string, limit ...int) []*Topic {
+    if v == "" {
+        v = ".*"
+    }
     query := map[string]interface{} {
         "state": TopicStatePublished,
-        k: v,
+        k + " REGEXP": v,
     }
     rows, e := m.Find(query, order, limit...)
     if e != nil {
