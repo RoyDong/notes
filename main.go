@@ -11,7 +11,7 @@ func init() {
     potato.Init()
 
     //define template funcs
-    potato.T.Funcs(map[string]interface{} {
+    potato.T.SetFuncs(map[string]interface{} {
     })
 
     //the map keys here must corresponds with 
