@@ -42,14 +42,15 @@ func (f *TopicForm) LoadData(r *potato.Request) {
     f.State,_ = r.Int("state")
 }
 
-var TopicModel = &topicModel{"topic"}
-
 type topicModel struct {
-    table string
+    potato.Model
 }
 
+var TopicModel = &topicModel{potato.Model{"topic",
+        []string{"id", "title", "content", "state", "created_at", "updated_at"}}}
+
 func (m *topicModel) Search(q map[string]string) []*Topic {
-    sql := fmt.Sprintf("SELECT `id`,`title`,`content`,`state`,`created_at`,`updated_at` FROM `%s`", m.table)
+    sql := fmt.Sprintf("SELECT `id`,`title`,`content`,`state`,`created_at`,`updated_at` FROM `%s`", m.Table)
     l := len(q)
     args := make([]interface{}, 0, l + 2)
     if l > 0 {
@@ -79,25 +80,11 @@ func (m *topicModel) Search(q map[string]string) []*Topic {
 }
 
 func (m *topicModel) SearchBy(k, v string, order string, limit ...int) []*Topic {
-    var params = make([]interface{}, 0, 1)
-    var where = "WHERE `state` = ?"
-    params = append(params, TopicStatePublished)
-    if len(v) > 0 {
-        where = fmt.Sprintf("%s AND `%s` REGEXP ?", where, k)
-        params = append(params, v)
+    query := map[string]interface{} {
+        "state": TopicStatePublished,
+        k: v,
     }
-
-    sql := fmt.Sprintf(
-            "SELECT `id`,`title`,`content`,`state`,`created_at`,`updated_at` " +
-            "FROM `%s` %s ORDER BY %s", m.table, where, order)
-
-    if len(limit) == 1 {
-        sql = fmt.Sprintf("%s LIMIT %d", sql, limit[0])
-    } else if len(limit) == 2 {
-        sql = fmt.Sprintf("%s LIMIT %d, %d", sql, limit[0], limit[1])
-    }
-
-    rows, e := potato.D.Query(sql, params...)
+    rows, e := m.Find(query, order, limit...)
     if e != nil {
         potato.L.Println(e)
         return nil
@@ -126,8 +113,8 @@ func (m *topicModel) loadTopic(row Scanner) *Topic {
     return t
 }
 
-func (m *topicModel) Find(id int64) *Topic {
-    sql := fmt.Sprintf("select `id`,`title`,`content`,`state`,`created_at`,`updated_at` from %s where `id`='%d'", m.table, id)
+func (m *topicModel) FindById(id int64) *Topic {
+    sql := fmt.Sprintf("select `id`,`title`,`content`,`state`,`created_at`,`updated_at` from %s where `id`='%d'", m.Table, id)
 
     return m.loadTopic(potato.D.QueryRow(sql))
 }
@@ -145,7 +132,7 @@ func (m *topicModel) Update(t *Topic) bool {
     t.UpdatedAt = now
     _,e := potato.D.Exec(fmt.Sprintf("UPDATE `%s` SET" +
             " `title`=?,`content`=?,`state`=?,`updated_at`=?" +
-            " WHERE `id`=?", m.table),
+            " WHERE `id`=?", m.Table),
             t.Title, t.Content, t.State, now.UnixNano(), t.id)
 
     if e != nil {
@@ -162,7 +149,7 @@ func (m *topicModel) Add(t *Topic) bool {
     t.UpdatedAt = now
     t.id = potato.D.Insert(fmt.Sprintf("INSERT INTO `%s`" +
             "(`title`,`content`,`state`,`created_at`,`updated_at`)" +
-            "VALUES(?,?,?,?,?)", m.table),
+            "VALUES(?,?,?,?,?)", m.Table),
             t.Title, t.Content, t.State, now.UnixNano(), now.UnixNano())
 
     return t.id > 0

@@ -19,7 +19,7 @@ func (c *Comment) New() {
     tid,_ := r.Int64("tid")
     user,_ := r.String("user")
 
-    topic := model.TopicModel.Find(tid)
+    topic := model.TopicModel.FindById(tid)
     if topic == nil {
         potato.Panic(http.StatusBadRequest, "topic not exists")
     }

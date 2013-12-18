@@ -34,7 +34,7 @@ func (c *Comment) Tid() int64 {
 
 func (c *Comment) Topic() *Topic {
     if c.topic == nil {
-        c.topic = TopicModel.Find(c.tid)
+        c.topic = TopicModel.FindById(c.tid)
     }
 
     return c.topic

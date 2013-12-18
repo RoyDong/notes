@@ -22,7 +22,7 @@ func (c *Topic) List() {
 func (c *Topic) Show() {
     id,_ := c.Request.Int64("id")
 
-    if topic := model.TopicModel.Find(id); topic != nil {
+    if topic := model.TopicModel.FindById(id); topic != nil {
         c.Render("topic/show", topic)
     } else {
         potato.Panic(http.StatusNotFound, "topic not found")

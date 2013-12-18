@@ -43,7 +43,7 @@ func (c *Topic) New() {
 
 func (c *Topic) Edit() {
     id,_ := c.Request.Int64("id")
-    topic := model.TopicModel.Find(id)
+    topic := model.TopicModel.FindById(id)
     if topic == nil {
         potato.Panic(http.StatusNotFound, "topic not found")
     }
