@@ -16,7 +16,7 @@ func init() {
 
     //the map keys here must corresponds with 
     //the controller configured in routes.yml
-    potato.R.Controllers(map[string]interface{} {
+    potato.R.SetControllers(map[string]interface{} {
         "error": new(controller.Error),
         "main": new(controller.Main),
         "topic": new(controller.Topic),
