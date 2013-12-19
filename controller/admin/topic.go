@@ -2,6 +2,7 @@ package admin
 
 import (
     "fmt"
+    "time"
     "net/http"
     "github.com/roydong/potato"
     "github.com/roydong/notes/model"
@@ -25,10 +26,13 @@ func (c *Topic) New() {
             goto RENDER
         }
 
+        now := time.Now()
         topic := new(model.Topic)
         topic.Title = form.Title
         topic.Content = form.Content
         topic.State = form.State
+        topic.UpdatedAt = now
+        topic.CreatedAt = now
 
         if model.TopicModel.Save(topic) {
             c.Redirect(fmt.Sprintf("/topic/%d", topic.Id()))
@@ -64,6 +68,7 @@ func (c *Topic) Edit() {
         topic.Title = form.Title
         topic.Content = form.Content
         topic.State = form.State
+        topic.UpdatedAt = time.Now() 
 
         if !model.TopicModel.Save(topic) {
             form.Message = "could not save to db"

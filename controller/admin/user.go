@@ -57,7 +57,6 @@ func (c *User) Signup() {
 
             user := new(model.User)
             user.Name = form.Name
-            potato.L.Println(form, user)
             user.Email = form.Email
             user.SetPasswd(form.Passwd)
             if m.Save(user) {

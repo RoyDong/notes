@@ -79,7 +79,7 @@ func (m *topicModel) Search(q map[string]string) []*Topic {
     return topics
 }
 
-func (m *topicModel) SearchBy(k, v string, order string, limit ...int) []*Topic {
+func (m *topicModel) SearchBy(k, v string, order string, limit ...int64) []*Topic {
     if v == "" {
         v = ".*"
     }
@@ -123,37 +123,18 @@ func (m *topicModel) FindById(id int64) *Topic {
 }
 
 func (m *topicModel) Save(t *Topic) bool {
+    data := map[string]interface{} {
+        "title": t.Title,
+        "content": t.Content,
+        "state": t.State,
+        "updated_at": t.UpdatedAt.UnixNano(),
+        "created_at": t.CreatedAt.UnixNano(),
+    }
+
     if t.Id() > 0 {
-        return m.Update(t)
+        return m.Update(data, map[string]interface{}{"id": t.id}) > 0
     }
 
-    return m.Add(t)
-}
-
-func (m *topicModel) Update(t *Topic) bool {
-    now := time.Now()
-    t.UpdatedAt = now
-    _,e := potato.D.Exec(fmt.Sprintf("UPDATE `%s` SET" +
-            " `title`=?,`content`=?,`state`=?,`updated_at`=?" +
-            " WHERE `id`=?", m.Table),
-            t.Title, t.Content, t.State, now.UnixNano(), t.id)
-
-    if e != nil {
-        potato.L.Println(e)
-        return false
-    }
-
-    return true
-}
-
-func (m *topicModel) Add(t *Topic) bool {
-    now := time.Now()
-    t.CreatedAt = now
-    t.UpdatedAt = now
-    t.id = potato.D.Insert(fmt.Sprintf("INSERT INTO `%s`" +
-            "(`title`,`content`,`state`,`created_at`,`updated_at`)" +
-            "VALUES(?,?,?,?,?)", m.Table),
-            t.Title, t.Content, t.State, now.UnixNano(), now.UnixNano())
-
+    t.id = m.Insert(data)
     return t.id > 0
 }
