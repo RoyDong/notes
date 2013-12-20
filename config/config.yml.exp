@@ -1,14 +1,10 @@
 name: Topics
 env: prod
 
-http:
-    host: name.com
-    port: 80
-    redirections:
-        -
-            rexp: .*roydong.com
-            host: notes.roydong.com
 
+sock_file: /run/potato.socket
+port: 37221
+wsport: 81
 
 log_dir: log/
 static_dir: ~
