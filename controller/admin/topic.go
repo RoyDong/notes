@@ -35,7 +35,7 @@ func (c *Topic) New() {
         topic.CreatedAt = now
 
         if model.TopicModel.Save(topic) {
-            c.Redirect(fmt.Sprintf("/topic/%d", topic.Id()))
+            c.Redirect(fmt.Sprintf("/topic/%d", topic.Id))
         }
 
         form.Message = "could not save to db"
@@ -68,7 +68,7 @@ func (c *Topic) Edit() {
         topic.Title = form.Title
         topic.Content = form.Content
         topic.State = form.State
-        topic.UpdatedAt = time.Now() 
+        topic.UpdatedAt = time.Now()
 
         if !model.TopicModel.Save(topic) {
             form.Message = "could not save to db"
@@ -81,17 +81,7 @@ func (c *Topic) Edit() {
 
 
 func (c *Topic) List() {
-    q := make(map[string]string, 2)
     title,_ := c.Request.String("title")
-    if len(title) > 0 {
-        q["title"] = title
-    }
-
-    content,_ := c.Request.String("content")
-    if len(content) > 0 {
-        q["content"] = content
-    }
-
     page,_ := c.Request.Int("page")
     if page < 1 { page = 1 }
     size,_ := c.Request.Int("size")
@@ -102,6 +92,6 @@ func (c *Topic) List() {
         "prevpage": page - 1,
         "nextpage": page + 1,
         "size": size,
-        "topics": model.TopicModel.Search(q),
+        "topics": model.TopicModel.Search("title", title),
     })
 }

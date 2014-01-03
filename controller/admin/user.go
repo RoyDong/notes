@@ -37,7 +37,7 @@ func (c *User) Signin() {
                 c.Redirect("/admin/setting")
             }
 
-            form.Message = "email or password wrong"
+            form.Message = "email or password error"
         }
     }
 

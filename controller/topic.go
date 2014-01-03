@@ -13,9 +13,10 @@ type Topic struct {
 
 func (c *Topic) List() {
     title,_ := c.Request.String("q")
-    data := make(map[string]interface{}, 2)
-    data["topics"] = model.TopicModel.SearchBy("title", title, "created_at DESC")
-    data["q"] = title
+    data := map[string]interface{} {
+        "topics": model.TopicModel.Search("title", title),
+        "q": title,
+    }
     c.Render("topic/list", data)
 }
 

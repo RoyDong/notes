@@ -10,6 +10,7 @@ import (
     "crypto/sha512"
     "encoding/hex"
     "github.com/roydong/potato"
+    "github.com/roydong/potato/orm"
 )
 
 type UserForm struct {
@@ -41,15 +42,13 @@ func (f *UserForm) Valid() bool {
 }
 
 type User struct {
-    id int64
-    passwd, salt string
-
-    Name, Email string
-    CreatedAt, UpdatedAt time.Time
-}
-
-func (u *User) Id() int64 {
-    return u.id
+    Id int64 `column:"id"`
+    Passwd string `column:"passwd"`
+    Salt string `column:"salt"`
+    Name string `column:"name"`
+    Email string `column:"email"`
+    CreatedAt time.Time `column:"created_at"`
+    UpdatedAt time.Time `column:"updated_at"`
 }
 
 /**
@@ -66,82 +65,53 @@ func (u *User) SetPasswd(passwd string) {
         panic("could not hash salt")
     }
 
-    u.salt = hex.EncodeToString(hash.Sum(nil))
-    u.passwd = UserModel.HashPasswd(passwd, u.salt)
+    u.Salt = hex.EncodeToString(hash.Sum(nil))
+    u.Passwd = UserModel.HashPasswd(passwd, u.Salt)
 }
 
 func (u *User) CheckPasswd(passwd string) bool {
-    return UserModel.HashPasswd(passwd, u.salt) == u.passwd
+    return UserModel.HashPasswd(passwd, u.Salt) == u.Passwd
 }
 
 
 type userModel struct {
-    tabel string
+    *orm.Model
 }
 
-var UserModel = &userModel{"user"}
-
-func (m *userModel) User(id int64) *User {
-    return nil
-}
+var UserModel = &userModel{orm.NewModel("user", new(User))}
 
 func (m *userModel) Find(id int64) *User {
-    stmt := fmt.Sprintf("select `id`,`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at` from %s where `id`='%d'", m.tabel, id)
+    var u *User
+    rows, e := orm.NewStmt().Select("u.*").From("User", "u").
+            Where(fmt.Sprintf("u.id = %d", id)).Query(nil)
 
-    row := potato.D.QueryRow(stmt)
-    return m.loadUser(row)
+    if e == nil && rows.Next() {
+        rows.ScanEntity(&u)
+    }
+
+    return u
 }
 
 func (m *userModel) FindByEmail(email string) *User {
-    stmt := fmt.Sprintf("select `id`,`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at` from %s where `email`='%s'", m.tabel, email)
+    var u *User
+    rows, e := orm.NewStmt().Select("u.*").From("User", "u").
+            Where("u.email = :e").Query(map[string]interface{}{"e": email})
 
-    row := potato.D.QueryRow(stmt)
-    return m.loadUser(row)
-}
-
-func (m *userModel) loadUser(row Scanner) *User {
-    u := new(User)
-    var ct, ut int64
-    if e := row.Scan(&u.id, &u.Email, &u.Name, &u.passwd, &u.salt, &ct, &ut); e != nil {
-        return nil
+    if e == nil && rows.Next() {
+        rows.ScanEntity(&u)
     }
 
-    u.CreatedAt = time.Unix(0, ct)
-    u.UpdatedAt = time.Unix(0, ut)
     return u
 }
 
 
 func (m *userModel) Exists(email string) bool {
-    stmt := fmt.Sprintf("select count(id) c from %s where `email`='%s'", m.tabel, email)
-    row := potato.D.QueryRow(stmt)
-    var count int
-    if e := row.Scan(&count); e != nil {
-        potato.L.Println(e)
-    }
+    n,_ := orm.NewStmt().Count("User", "u").
+            Where(fmt.Sprintf("u.email = '%s'", email)).Exec(nil)
 
-    return count > 0
+    return n > 0
 }
 
-func (m *userModel) Save(u *User) bool {
-    if u.Id() > 0 {
-        return false
-    }
-
-    return m.Add(u)
-}
-
-func (m *userModel) Add(u *User) bool {
-    t := time.Now()
-    u.CreatedAt = t
-    u.UpdatedAt = t
-    u.id = potato.D.Insert(fmt.Sprintf("INSERT INTO `%s`" +
-            "(`email`,`name`,`passwd`,`salt`,`created_at`,`updated_at`)" +
-            "VALUES(?,?,?,?,?,?)", m.tabel),
-            u.Email, u.Name, u.passwd, u.salt, t.UnixNano(), t.UnixNano())
-
-    return u.id > 0
-}
 
 func (m *userModel) HashPasswd(passwd string, salt string) string {
     hash := sha512.New()

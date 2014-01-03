@@ -3,19 +3,23 @@ package main
 
 import (
     "github.com/roydong/potato"
+    "github.com/roydong/potato/orm"
+    _"github.com/go-sql-driver/mysql"
     "github.com/roydong/notes/controller"
     "github.com/roydong/notes/controller/admin"
 )
 
 func init() {
     potato.Init()
+    orm.InitDefault()
+}
 
+func main() {
     //define template funcs
-    potato.T.SetFuncs(map[string]interface{} {
-    })
+    potato.T.SetFuncs(map[string]interface{} {})
 
-    //the map keys here must corresponds with 
-    //the controller configured in routes.yml
+    //the map keys here must corresponds to
+    //controller's configure in routes.yml
     potato.R.SetControllers(map[string]interface{} {
         "error": new(controller.Error),
         "main": new(controller.Main),
@@ -25,11 +29,7 @@ func init() {
         "admin_user": new(admin.User),
         "admin_topic": new(admin.Topic),
     })
-}
 
-func main() {
     potato.Serve()
 }
-
-
 
