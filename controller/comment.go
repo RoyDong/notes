@@ -1,6 +1,7 @@
 package controller
 
 import (
+    "time"
     "net/http"
     "github.com/roydong/potato"
     "github.com/roydong/notes/model"
@@ -28,8 +29,11 @@ func (c *Comment) New() {
 
     }
 
+    now := time.Now()
     comment := new(model.Comment)
     comment.Content,_ = r.String("content")
+    comment.UpdatedAt = now
+    comment.CreatedAt = now
     comment.SetTopic(topic)
 
     if model.CommentModel.Save(comment) {

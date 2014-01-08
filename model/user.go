@@ -2,7 +2,6 @@ package model
 
 import (
     "io"
-    "fmt"
     "time"
     "strings"
     "crypto/rand"
@@ -83,7 +82,7 @@ var UserModel = &userModel{orm.NewModel("user", new(User))}
 func (m *userModel) Find(id int64) *User {
     var u *User
     rows, e := orm.NewStmt().Select("u.*").From("User", "u").
-            Where(fmt.Sprintf("u.id = %d", id)).Query(nil)
+            Where("u.id = ?").Query(id)
 
     if e == nil && rows.Next() {
         rows.ScanEntity(&u)
@@ -94,8 +93,8 @@ func (m *userModel) Find(id int64) *User {
 
 func (m *userModel) FindByEmail(email string) *User {
     var u *User
-    rows, e := orm.NewStmt().Select("u.*").From("User", "u").
-            Where("u.email = :e").Query(map[string]interface{}{"e": email})
+    rows, e := orm.NewStmt().Select("u.*").
+            From("User", "u").Where("u.email = ?").Query(email)
 
     if e == nil && rows.Next() {
         rows.ScanEntity(&u)
@@ -107,7 +106,7 @@ func (m *userModel) FindByEmail(email string) *User {
 
 func (m *userModel) Exists(email string) bool {
     n,_ := orm.NewStmt().Count("User", "u").
-            Where(fmt.Sprintf("u.email = '%s'", email)).Exec(nil)
+            Where("u.email = ?").Exec(email)
 
     return n > 0
 }

@@ -47,10 +47,10 @@ var TopicModel = &topicModel{orm.NewModel("topic", new(Topic))}
 func (m *topicModel) Search(k, v string) []*Topic {
     stmt := orm.NewStmt().Select("t.*").From("Topic", "t").Desc("id")
     if len(v) > 0 {
-        stmt.Where(fmt.Sprintf("`t`.`%s` REGEXP :t", k))
+        stmt.Where(fmt.Sprintf("`t`.`%s` REGEXP ?", k))
     }
 
-    rows, e := stmt.Query(map[string]interface{} {"t": v})
+    rows, e := stmt.Query(v)
     if e != nil {
         return nil
     }
@@ -68,7 +68,7 @@ func (m *topicModel) Search(k, v string) []*Topic {
 func (m *topicModel) FindById(id int64) *Topic {
     var t *Topic
     rows, e := orm.NewStmt().Select("t.*").From("Topic", "t").
-            Where(fmt.Sprintf("t.id = %d", id)).Query(nil)
+            Where("t.id = ?").Query(id)
 
     if e == nil && rows.Next() {
         rows.ScanEntity(&t)

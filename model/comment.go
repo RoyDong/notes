@@ -74,9 +74,9 @@ type commentModel struct {
 
 func (m *commentModel) FindBy(k string, v interface{}) []*Comment {
     stmt := orm.NewStmt().Select("c.*").From("Comment", "c").
-            Where(fmt.Sprintf("`c`.`%s` = :v", k)).Asc("id")
+            Where(fmt.Sprintf("`c`.`%s` = ?", k)).Asc("id")
 
-    rows, e := stmt.Query(map[string]interface{} {"v": v})
+    rows, e := stmt.Query(v)
     if e != nil {
         return nil
     }
