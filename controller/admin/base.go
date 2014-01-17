@@ -29,6 +29,6 @@ func (c *Base) Init() {
             }
         }
 
-        c.Redirect("/admin/signin")
+        c.Redirect("/admin/signin", 302)
     }
 }

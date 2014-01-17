@@ -2,8 +2,6 @@ package controller
 
 import (
     "time"
-    "net/http"
-    "github.com/roydong/potato"
     "github.com/roydong/notes/model"
 )
 
@@ -14,7 +12,7 @@ type Comment struct {
 func (c *Comment) New() {
     r := c.Request
     if r.Method != "POST" {
-        potato.Panic(http.StatusBadRequest, "post allow only")
+        panic("post allow only")
     }
 
     tid,_ := r.Int64("tid")
@@ -22,7 +20,7 @@ func (c *Comment) New() {
 
     topic := model.TopicModel.FindById(tid)
     if topic == nil {
-        potato.Panic(http.StatusBadRequest, "topic not exists")
+        panic("topic not exists")
     }
 
     if len(user) > 0 {
@@ -39,6 +37,6 @@ func (c *Comment) New() {
     if model.CommentModel.Save(comment) {
         c.RenderPartial("topic/_comment", comment)
     } else {
-        potato.Panic(http.StatusInternalServerError, "cant save to db")
+        panic("cant save to db")
     }
 }

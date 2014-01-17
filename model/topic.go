@@ -1,6 +1,7 @@
 package model
 
 import (
+    "log"
     "fmt"
     "time"
     "github.com/roydong/potato"
@@ -45,13 +46,12 @@ type topicModel struct {
 var TopicModel = &topicModel{orm.NewModel("topic", new(Topic))}
 
 func (m *topicModel) Search(k, v string) []*Topic {
-    stmt := orm.NewStmt().Select("t.*").From("Topic", "t").Desc("id")
-    if len(v) > 0 {
-        stmt.Where(fmt.Sprintf("`t`.`%s` REGEXP ?", k))
-    }
+    stmt := orm.NewStmt().Select("t.*").From("Topic", "t").
+        Desc("id").Where(fmt.Sprintf("`t`.`%s` LIKE ?", k))
 
-    rows, e := stmt.Query(v)
+    rows, e := stmt.Query("%" + v + "%")
     if e != nil {
+        log.Println(e)
         return nil
     }
 

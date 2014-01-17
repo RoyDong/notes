@@ -1,8 +1,6 @@
 package controller
 
 import (
-    "net/http"
-    "github.com/roydong/potato"
     "github.com/roydong/notes/model"
 )
 
@@ -26,6 +24,6 @@ func (c *Topic) Show() {
     if topic := model.TopicModel.FindById(id); topic != nil {
         c.Render("topic/show", topic)
     } else {
-        potato.Panic(http.StatusNotFound, "topic not found")
+        panic("topic not found")
     }
 }

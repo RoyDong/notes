@@ -1,8 +1,6 @@
 package admin
 
 import (
-    "net/http"
-    "github.com/roydong/potato"
     "github.com/roydong/notes/model"
 )
 
@@ -19,7 +17,7 @@ func (c *User) Setting() {
 
     var u *model.User
     if u = c.User(); u == nil {
-        potato.Panic(http.StatusUnauthorized, "You have not signed in")
+        panic("You have not signed in")
     }
 
     c.Render("admin/user/setting", u)
@@ -34,7 +32,7 @@ func (c *User) Signin() {
             if user := m.FindByEmail(form.Email); user != nil &&
                     user.CheckPasswd(form.Passwd) {
                 c.Request.Session.Set("user", user, true)
-                c.Redirect("/admin/setting")
+                c.Redirect("/admin/setting", 302)
             }
 
             form.Message = "email or password error"
@@ -61,7 +59,7 @@ func (c *User) Signup() {
             user.SetPasswd(form.Passwd)
             if m.Save(user) {
                 c.Request.Session.Set("user", user, true)
-                c.Redirect("/admin/setting")
+                c.Redirect("/admin/setting", 302)
             }
 
             form.Message = "server error, could not save data"

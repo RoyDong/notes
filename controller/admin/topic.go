@@ -3,8 +3,6 @@ package admin
 import (
     "fmt"
     "time"
-    "net/http"
-    "github.com/roydong/potato"
     "github.com/roydong/notes/model"
 )
 
@@ -35,7 +33,7 @@ func (c *Topic) New() {
         topic.CreatedAt = now
 
         if model.TopicModel.Save(topic) {
-            c.Redirect(fmt.Sprintf("/topic/%d", topic.Id))
+            c.Redirect(fmt.Sprintf("/topic/%d", topic.Id), 302)
         }
 
         form.Message = "could not save to db"
@@ -49,7 +47,7 @@ func (c *Topic) Edit() {
     id,_ := c.Request.Int64("id")
     topic := model.TopicModel.FindById(id)
     if topic == nil {
-        potato.Panic(http.StatusNotFound, "topic not found")
+        panic("topic not found")
     }
 
     if c.Request.Method == "POST" {
