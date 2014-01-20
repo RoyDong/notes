@@ -1,8 +1,8 @@
 package admin
 
 import (
-    "../../model"
     "fmt"
+    "github.com/roydong/notes/model"
     "time"
 )
 

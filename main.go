@@ -1,9 +1,9 @@
 package main
 
 import (
-    "./controller"
-    "./controller/admin"
     _ "github.com/go-sql-driver/mysql"
+    "github.com/roydong/notes/controller"
+    "github.com/roydong/notes/controller/admin"
     "github.com/roydong/potato"
 )
 

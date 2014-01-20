@@ -1,7 +1,7 @@
 package admin
 
 import (
-    "../../model"
+    "github.com/roydong/notes/model"
 )
 
 type User struct {

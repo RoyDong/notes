@@ -47,9 +47,9 @@ var TopicModel = &topicModel{orm.NewModel("topic", new(Topic))}
 func (m *topicModel) Search(k, v string) []*Topic {
     stmt := orm.NewStmt().Select("t.*").From("Topic", "t").
         Desc("id").Where(fmt.Sprintf(
-            "`t`.`%s` LIKE ? AND `t`.`state` = ?", k))
+        "`t`.`%s` LIKE ? AND `t`.`state` = ?", k))
 
-    rows, e := stmt.Query("%" + v + "%", TopicStatePublished)
+    rows, e := stmt.Query("%"+v+"%", TopicStatePublished)
     if e != nil {
         log.Println(e)
         return nil
