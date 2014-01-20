@@ -1,9 +1,7 @@
 package controller
 
-import (
-)
+import ()
 
 type User struct {
     Base
 }
-

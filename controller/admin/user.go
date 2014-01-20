@@ -1,7 +1,7 @@
 package admin
 
 import (
-    "../model"
+    "../../model"
 )
 
 type User struct {
@@ -30,7 +30,7 @@ func (c *User) Signin() {
         if form.Valid() {
             m := model.UserModel
             if user := m.FindByEmail(form.Email); user != nil &&
-                    user.CheckPasswd(form.Passwd) {
+                user.CheckPasswd(form.Passwd) {
                 c.Request.Session.Set("user", user, true)
                 c.Redirect("/admin/setting", 302)
             }
@@ -66,6 +66,6 @@ func (c *User) Signup() {
         }
     }
 
-    RENDER:
-        c.Render("admin/user/signup", form)
+RENDER:
+    c.Render("admin/user/signup", form)
 }

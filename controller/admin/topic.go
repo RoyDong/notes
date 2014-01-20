@@ -1,9 +1,9 @@
 package admin
 
 import (
+    "../../model"
     "fmt"
     "time"
-    "../model"
 )
 
 type Topic struct {
@@ -39,12 +39,12 @@ func (c *Topic) New() {
         form.Message = "could not save to db"
     }
 
-    RENDER:
-        c.Render("admin/topic/new", form)
+RENDER:
+    c.Render("admin/topic/new", form)
 }
 
 func (c *Topic) Edit() {
-    id,_ := c.Request.Int64("id")
+    id, _ := c.Request.Int64("id")
     topic := model.TopicModel.FindById(id)
     if topic == nil {
         panic("topic not found")
@@ -73,23 +73,26 @@ func (c *Topic) Edit() {
         }
     }
 
-    RENDER:
-        c.Render("admin/topic/edit", topic)
+RENDER:
+    c.Render("admin/topic/edit", topic)
 }
 
-
 func (c *Topic) List() {
-    title,_ := c.Request.String("title")
-    page,_ := c.Request.Int("page")
-    if page < 1 { page = 1 }
-    size,_ := c.Request.Int("size")
-    if size < 1 { size = 200 }
+    title, _ := c.Request.String("title")
+    page, _ := c.Request.Int("page")
+    if page < 1 {
+        page = 1
+    }
+    size, _ := c.Request.Int("size")
+    if size < 1 {
+        size = 200
+    }
 
-    c.Render("admin/topic/list", &map[string]interface{} {
-        "page": page,
+    c.Render("admin/topic/list", &map[string]interface{}{
+        "page":     page,
         "prevpage": page - 1,
         "nextpage": page + 1,
-        "size": size,
-        "topics": model.TopicModel.Search("title", title),
+        "size":     size,
+        "topics":   model.TopicModel.Search("title", title),
     })
 }

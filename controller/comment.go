@@ -1,8 +1,8 @@
 package controller
 
 import (
-    "time"
     "../model"
+    "time"
 )
 
 type Comment struct {
@@ -15,8 +15,8 @@ func (c *Comment) New() {
         panic("post allow only")
     }
 
-    tid,_ := r.Int64("tid")
-    user,_ := r.String("user")
+    tid, _ := r.Int64("tid")
+    user, _ := r.String("user")
 
     topic := model.TopicModel.FindById(tid)
     if topic == nil {
@@ -29,7 +29,7 @@ func (c *Comment) New() {
 
     now := time.Now()
     comment := new(model.Comment)
-    comment.Content,_ = r.String("content")
+    comment.Content, _ = r.String("content")
     comment.UpdatedAt = now
     comment.CreatedAt = now
     comment.SetTopic(topic)

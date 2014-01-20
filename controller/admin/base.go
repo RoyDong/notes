@@ -1,8 +1,8 @@
 package admin
 
 import (
+    "../../model"
     "github.com/roydong/potato"
-    "../model"
 )
 
 type Base struct {
@@ -12,7 +12,7 @@ type Base struct {
 
 func (c *Base) User() *model.User {
     if c.user == nil {
-        c.user,_ = c.Request.Session.Value("user").(*model.User)
+        c.user, _ = c.Request.Session.Value("user").(*model.User)
     }
 
     return c.user
