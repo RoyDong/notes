@@ -1,7 +1,7 @@
 package controller
 
 import (
-    "github.com/roydong/notes/model"
+    "../model"
 )
 
 type Topic struct {

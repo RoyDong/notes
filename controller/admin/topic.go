@@ -3,7 +3,7 @@ package admin
 import (
     "fmt"
     "time"
-    "github.com/roydong/notes/model"
+    "../model"
 )
 
 type Topic struct {

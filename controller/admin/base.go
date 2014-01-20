@@ -2,7 +2,7 @@ package admin
 
 import (
     "github.com/roydong/potato"
-    "github.com/roydong/notes/model"
+    "../model"
 )
 
 type Base struct {

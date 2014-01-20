@@ -2,7 +2,7 @@ package controller
 
 import (
     "time"
-    "github.com/roydong/notes/model"
+    "../model"
 )
 
 type Comment struct {
