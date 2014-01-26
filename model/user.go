@@ -84,8 +84,8 @@ func (m *userModel) Find(id int64) *User {
     rows, e := orm.NewStmt().Select("u.*").From("User", "u").
             Where("u.id = ?").Query(id)
 
-    if e == nil && rows.Next() {
-        rows.ScanEntity(&u)
+    if e == nil {
+        rows.ScanRow(&u)
     }
 
     return u
@@ -96,8 +96,8 @@ func (m *userModel) FindByEmail(email string) *User {
     rows, e := orm.NewStmt().Select("u.*").
             From("User", "u").Where("u.email = ?").Query(email)
 
-    if e == nil && rows.Next() {
-        rows.ScanEntity(&u)
+    if e == nil {
+        rows.ScanRow(&u)
     }
 
     return u

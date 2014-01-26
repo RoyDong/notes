@@ -70,8 +70,8 @@ func (m *topicModel) FindById(id int64) *Topic {
     rows, e := orm.NewStmt().Select("t.*").From("Topic", "t").
             Where("t.id = ?").Query(id)
 
-    if e == nil && rows.Next() {
-        rows.ScanEntity(&t)
+    if e == nil {
+        rows.ScanRow(&t)
     }
 
     return t
