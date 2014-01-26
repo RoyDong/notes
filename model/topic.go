@@ -2,23 +2,23 @@ package model
 
 import (
     "fmt"
-    "time"
     "github.com/roydong/potato"
     "github.com/roydong/potato/orm"
+    "log"
+    "time"
 )
 
-
 const (
-    TopicStateDraft = 0
+    TopicStateDraft     = 0
     TopicStatePublished = 1
-    TopicStateDeleted = 2
+    TopicStateDeleted   = 2
 )
 
 type Topic struct {
-    Id int64 `column:"id"`
-    Title string `column:"title"`
-    Content string `column:"content"`
-    State int `column:"state"`
+    Id        int64     `column:"id"`
+    Title     string    `column:"title"`
+    Content   string    `column:"content"`
+    State     int       `column:"state"`
     CreatedAt time.Time `column:"created_at"`
     UpdatedAt time.Time `column:"updated_at"`
 }
@@ -29,13 +29,13 @@ func (t *Topic) Comments() []*Comment {
 
 type TopicForm struct {
     Title, Content, Message string
-    State int
+    State                   int
 }
 
 func (f *TopicForm) LoadData(r *potato.Request) {
-    f.Title,_ = r.String("title")
-    f.Content,_ = r.String("content")
-    f.State,_ = r.Int("state")
+    f.Title, _ = r.String("title")
+    f.Content, _ = r.String("content")
+    f.State, _ = r.Int("state")
 }
 
 type topicModel struct {
@@ -45,13 +45,13 @@ type topicModel struct {
 var TopicModel = &topicModel{orm.NewModel("topic", new(Topic))}
 
 func (m *topicModel) Search(k, v string) []*Topic {
-    stmt := orm.NewStmt().Select("t.*").From("Topic", "t").Desc("id")
-    if len(v) > 0 {
-        stmt.Where(fmt.Sprintf("`t`.`%s` REGEXP ?", k))
-    }
+    stmt := orm.NewStmt().Select("t.*").From("Topic", "t").
+        Desc("id").Where(fmt.Sprintf(
+        "`t`.`%s` LIKE ? AND `t`.`state` = ?", k))
 
-    rows, e := stmt.Query(v)
+    rows, e := stmt.Query("%"+v+"%", TopicStatePublished)
     if e != nil {
+        log.Println(e)
         return nil
     }
 
@@ -68,7 +68,7 @@ func (m *topicModel) Search(k, v string) []*Topic {
 func (m *topicModel) FindById(id int64) *Topic {
     var t *Topic
     rows, e := orm.NewStmt().Select("t.*").From("Topic", "t").
-            Where("t.id = ?").Query(id)
+        Where("t.id = ?").Query(id)
 
     if e == nil {
         rows.ScanRow(&t)

@@ -1,7 +1,6 @@
 package controller
 
-import (
-)
+import ()
 
 type Main struct {
     Base

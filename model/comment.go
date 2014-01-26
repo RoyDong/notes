@@ -2,9 +2,9 @@ package model
 
 import (
     "fmt"
-    "time"
     "github.com/roydong/potato"
     "github.com/roydong/potato/orm"
+    "time"
 )
 
 const (
@@ -12,16 +12,16 @@ const (
 )
 
 type Comment struct {
-    Id int64 `column:"id"`
+    Id  int64 `column:"id"`
 
-    Tid int64 `column:"tid"`
+    Tid   int64 `column:"tid"`
     topic *Topic
 
-    Uid int64 `column:"uid"`
+    Uid  int64 `column:"uid"`
     user *User
 
-    Content string `column:"content"`
-    State int `column:"state"`
+    Content   string    `column:"content"`
+    State     int       `column:"state"`
     CreatedAt time.Time `column:"created_at"`
     UpdatedAt time.Time `column:"updated_at"`
 }
@@ -52,21 +52,17 @@ func (c *Comment) SetUser(u *User) {
     c.user = u
 }
 
-
-
 type CommentForm struct {
     Content string
-    State int
+    State   int
 }
 
 func (f *CommentForm) LoadData(r *potato.Request) {
-    f.Content,_ = r.String("content")
-    f.State,_ = r.Int("state")
+    f.Content, _ = r.String("content")
+    f.State, _ = r.Int("state")
 }
 
-
 var CommentModel = &commentModel{orm.NewModel("comment", new(Comment))}
-
 
 type commentModel struct {
     *orm.Model
@@ -74,7 +70,7 @@ type commentModel struct {
 
 func (m *commentModel) FindBy(k string, v interface{}) []*Comment {
     stmt := orm.NewStmt().Select("c.*").From("Comment", "c").
-            Where(fmt.Sprintf("`c`.`%s` = ?", k)).Asc("id")
+        Where(fmt.Sprintf("`c`.`%s` = ?", k)).Asc("id")
 
     rows, e := stmt.Query(v)
     if e != nil {
